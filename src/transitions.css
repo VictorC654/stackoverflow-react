@@ -1,0 +1,22 @@
+.slide-vertical-enter
+{
+    opacity:0;
+    transform:translateY(-20px);
+}
+.slide-vertical-enter-active
+{
+    opacity: 1;
+    transform:translateY(0);
+    transition: all 300ms;
+}
+.slide-vertical-exit
+{
+    transform:translateY(0px);
+    opacity:1;
+}
+.slide-vertical-exit-active
+{
+    opacity: 0;
+    transform:translateY(-20px);
+    transition: all 300ms;
+}
