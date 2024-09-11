@@ -12,7 +12,7 @@ body {
     height: 100vh;
 }
 
-/* Containerul principal al formularului */
+/* Containerul principalgit a */
 .register-form {
     width: 700px;
     height: 570px;
@@ -24,7 +24,7 @@ body {
     padding: 2em;
 }
 
-/* Titlul formularului */
+/* Titlul */
 .register-form h2 {
     margin-top: 1em;
     display: flex;
@@ -34,7 +34,7 @@ body {
     transform: translateY(-50%);
 }
 
-/* Stilizarea grupului de inputuri */
+
 .input-container {
     position: relative;
     margin-bottom: 25px; /* Spațiu pentru a preveni suprapunerea mesajelor de eroare */
@@ -65,7 +65,7 @@ body {
     width: 25px;
 }
 
-/* Stilizarea butonului de submit */
+/* Stilizarea butonului  */
 .register-button-container {
     margin-top: 2em;
     display: flex;
@@ -97,27 +97,27 @@ body {
 .error {
     color: red;
     font-size: 16px;
-    position: absolute; /* Poziționăm mesajul de eroare în mod absolut */
-    bottom: -25spx; /* Plasăm mesajul sub input, fără a muta alte elemente */
-    left: 35px; /* Aliniem mesajul la stânga inputului */
-    width: 100%; /* Lățimea mesajului de eroare pentru a se alinia cu inputul */
-    margin: 0; /* Eliminăm marginea implicită */
+    position: absolute; 
+    bottom: -25spx; 
+    left: 35px; /* Aliniem mesajul la stânga */
+    width: 100%; 
+    margin: 0; 
 }
 
 .input-container select {
     appearance: none; /* Ascunde săgeata implicită */
     background: url('./arrow.png') no-repeat right center; /* Adaugă săgeata personalizată */
-    background-size: 13px 13px; /* Ajustează dimensiunea săgeții (12px x 12px, modifică după necesități) */
-    background-position: calc(100% - 35px) center; /* Mută săgeata mai spre stânga cu 10px față de marginea dreaptă */
-    padding-right: 30px; /* Asigură spațiu suficient pentru săgeată */
-    border: 0.1px solid #ccc; /* Adaugă o bordură pentru input */
-    background-color: #ffffff; /* Culoarea de fundal a casetei (exemplu: alb) */
-    color:#808080; /* Culoarea textului (exemplu: negru) */
+    background-size: 13px 13px; 
+    background-position: calc(100% - 35px) center; /* Mută săgeata mai spre stânga */
+    padding-right: 30px; 
+    border: 0.1px solid #ccc; 
+    background-color: #ffffff; /* Culoarea de fundal a casetei */
+    color:#808080; /* Culoarea textului  */
 }
 
 
 .input-container {
-    position: relative; /* Asigură poziționarea relativă a containerului */
+    position: relative; 
 }
 
 
