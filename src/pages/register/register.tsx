@@ -67,7 +67,6 @@ const RegisterForm: React.FC = () => {
     <div className="center-form">
       <form onSubmit={handleSubmit} className="register-form">
         <h2>Sign Up</h2>
-
         <div className="input-container">
           <img src={emailIcon} alt="Email Icon" />
           <input

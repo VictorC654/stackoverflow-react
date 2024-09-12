@@ -1,12 +1,12 @@
-.center-form
+.form-center
 {
     width:100%;
-    height:75vh;
+    min-height:85vh;
     display:flex;
     justify-content: center;
     align-items: center;
 }
-.login-form
+.login-form1
 {
     width:550px;
     height:350px;
@@ -24,7 +24,7 @@
     font-size:2em;
     font-weight:bold;
 }
-.input-container
+.input-container1
 {
     margin-top:1em;
     display:flex;
@@ -33,52 +33,53 @@
 }
 
 /* FORM GROUP FOR ICON */
-.input-container input[type=text]
+.input-container1 input[type=text]
 {
     cursor:pointer;
-    height:60px;
+    height:48px;
     outline:none;
     padding:.5em;
     width:400px; /*WIDTH OF INPUT*/
     border:none;
     background:white;
 }
-.input-container input[type=password]
+.input-container1 input[type=password]
 {
     cursor:pointer;
-    height:52px;
+    height:48px;
     outline:none;
     padding:.5em;
     width:400px; /*WIDTH OF INPUT*/
     border:none;
     background:white;
 }
-.input-group
+.input-group1
 {
     background:linear-gradient(black 0 0) bottom / 0% 2px no-repeat white;
     transition: 1s;
     display:flex;
-    flex-direction: column;
+    flex-direction: row;
     box-shadow: 0px 16px 32px -8px #0C0C0D66;
     margin:0 auto;
-    height:42px;
+    height:50px;
     max-width:450px; /* WIDTH OF CONTAINER - INPUT WIDTH + 50px */
 }
-.input-group:hover
+.icon-container1
+{
+    width:50px;
+    height:50px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction:column;
+}
+.input-group1:hover
 {
     background-size: 100% 2px;
 }
-.icon-container
-{
-    width:50px;
-    height:100%;
-    display:flex;
-    justify-content: center;
-}
-
 /* END OF FORM GROUP FOR ICON */
 
-.login-button-container
+.login-button-container1
 {
     margin-top:.5em;
     display:flex;

@@ -9,7 +9,7 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <>
       <Header />
-      <main className="main-content">{children}</main>
+      <main className="">{children}</main>
       <Footer />
     </>
   );
