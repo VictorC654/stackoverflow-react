@@ -1,26 +1,19 @@
-import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
+import React from 'react';
+
+import Layout from './components/layout/layout'; 
 import Home from './pages/home/home';
-import About from './pages/about/about';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
-function App() {
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
+export default function App(){
   return (
-    <BrowserRouter>
-      <div>
-        <nav>
-          <ul>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/about">About</Link></li>
-          </ul>
-        </nav>
+    <Router>
+      <Layout>
         <Routes>
-          <Route path="/" element={<Home/>} />
-          <Route path="/about" element={<About/>} />
+          <Route path="/" element={<Home />} />
         </Routes>
-      </div>
-    </BrowserRouter>
+      </Layout>
+    </Router>
   );
+};
 
-}
-
-export default App;
