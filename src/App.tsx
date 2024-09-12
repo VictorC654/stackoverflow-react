@@ -1,33 +1,18 @@
-import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
+import React from 'react';
+
+import Layout from './components/layout/layout';
 import Home from './pages/home/home';
-import About from './pages/about/about';
-import Login from './pages/login/login';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-function App() {
-  return (
-    <BrowserRouter>
-      <div>
-        <nav>
-          <ul>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/about">About</Link></li>
-            <li><Link to="/login">Login</Link></li>
-          </ul>
-        </nav>
-
-
-
-        <Routes>
-          <Route path="/" element={<Home/>} />
-          <Route path="/about" element={<About/>} />
-          <Route path="/login" element={<Login/>} />
-        </Routes>
-      </div>
-    </BrowserRouter>
-  );
-
-}
-
-export default App;
+export default function App(){
+    return (
+        <Router>
+            <Layout>
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                </Routes>
+            </Layout>
+        </Router>
+    );
+};
