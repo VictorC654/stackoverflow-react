@@ -13,22 +13,25 @@ export default function login() {
                 <div className="login-text">Log In</div>
                 <div className="input-container">
                     <div className="input-group">
-                        <input type="text" style={{ marginBottom: "1em" }} placeholder="Email" />
                         <div className="icon-container">
                             <img src={emailImage} style={{ width:"25px", height:"25px", marginTop:"7px"}} />
                         </div>
+                        <input type="text" style={{ marginBottom: "1em" }} placeholder="Email" />
                     </div>
-                    <div className="input-group" style={{marginTop:"1em"}}>
-                        <input type="text" placeholder="Password" />
+                    <div className="input-group" style={{ marginTop: ".5em", marginBottom:"1em"}}>
                         <div className="icon-container">
                             <img src={passImage} style={{ width:"25px", height:"25px", marginTop:"7px"}} />
                         </div>
+                        <input type="password" placeholder="Password" style={{ marginBottom: "1em" }} />
                     </div>
                 </div>
                 <div className="login-button-container">
                     <div className="login-button">
-                        Login
+                        Log in
                     </div>
+                </div>
+                <div className="forgot-password-text" style={{ marginTop:".5em"}}>
+                    Forgot your password?
                 </div>
             </div>
         </div>
