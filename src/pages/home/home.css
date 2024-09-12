@@ -1,7 +1,7 @@
 .home {
     background-color: #C1BAEF;
-    height: 70vh;
     display: flex;
+    min-height: 90vh;
     align-items: center;
     justify-content: center;
   }
