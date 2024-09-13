@@ -7,7 +7,7 @@ export default function login() {
     return (
         <div className="form-center">
             <div className="login-form1">
-                <div className="login-text">Log In</div>
+                <div className="login-text">Log Inn</div>
                 <div className="input-container1">
                     <div className="input-group1">
                         <div className="icon-container1">
