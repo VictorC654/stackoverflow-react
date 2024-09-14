@@ -20,6 +20,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  z-index: 1000;
 }
 
 .container {
@@ -130,4 +131,15 @@
   width: 50px;
   height: 100%;
   background-color: transparent;
+}
+
+.search-icon :hover{
+  color: #8376d4 !important;
+}
+
+.error-message {
+  color: #433D6A;
+  font-size: 0.9em;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
