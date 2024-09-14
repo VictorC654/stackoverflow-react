@@ -1,27 +1,23 @@
 import "./header.css";
+import { Link } from "react-router-dom";
+import SearchTopics from "./search-topics";
 
 export default function Header() {
   return (
     <div className="nav-container">
       <div className="navbar-custom">
         <div className="container">
-          <div className="site-name">Questify</div>
-          <form className="search-form">
-            <div className="search-container">
-              <div className="search-icon">
-                <i className="fas fa-search"></i>
-              </div>
-              <input
-                type="text"
-                placeholder="Ask something"
-                aria-label="Search"
-                className="search-input"
-              />
-            </div>
-          </form>
+          <Link to="/home" className="site-name">
+            Questify
+          </Link>
+          <SearchTopics />
           <div className="btn-custom">
-            <button className="btn-login">Log In</button>
-            <button className="btn-signup">Sign Up</button>
+            <Link to="/login" className="btn-login">
+              Log In
+            </Link>
+            <Link to="/register" className="btn-signup">
+              Sign Up
+            </Link>
           </div>
         </div>
       </div>
