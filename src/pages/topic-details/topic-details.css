@@ -1,0 +1,118 @@
+.base-background {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #ebe9f8;
+    width: 100%;
+    max-width: 1094px;
+    border-radius: 10px;
+    margin: 50px auto;
+    padding: 30px 52px;
+    margin-top: 100px;
+}
+
+.comment-card, .simple-user-card {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start; /* Asigură că imaginea și textul sunt aliniate la început */
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 100%;
+    min-height: 150px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center; /* Ensure both the image and text are vertically aligned */
+    margin-right: 15px;
+    width: 100%;
+    position: relative;
+}
+
+.user-image-container {
+    display: flex;
+    align-items: center;
+    margin-right: 10px; /* Decrease space between image and text */
+    width: 40px;
+    height: 40px;
+    position: relative;
+    border-radius: 50%; /* Keep the container round */
+    overflow: hidden; /* Ensure the image stays inside the circle */
+}
+
+.user-image {
+    position: absolute;
+    width: 60%;
+    height: 60%;
+    top: 20%;
+    left: 20%;
+    z-index: 1;
+    object-fit: contain; /* This will ensure the image scales appropriately */
+}
+.username {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-right: 10px;
+    line-height: 1.2; /* Setează o înălțime a liniei consistentă pentru text */
+}
+
+.comment-content {
+    font-size: 1rem;
+    color: #433D6A;
+    margin-top: 5px; /* Ajustează spațiul dintre nume și descriere */
+}
+
+
+.comment-date {
+    font-size: 0.85rem;
+    color: #999;
+    text-align: right;
+    position: absolute;
+    top: -10px;
+    right: 0px;
+}
+
+.rating-stars {
+    display: flex;
+    justify-content: flex-end;
+    color: gold;
+    font-size: 1.25rem;
+    position: absolute;
+    bottom: 10px;
+    right: 20px; 
+}
+
+.comment-star {
+    margin-left: 5px;
+}
+
+/* Stil pentru bara de input să fie fixă în partea de jos */
+.fixed-input {
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+    background-color: white;
+    z-index: 100; /* Asigură-te că este deasupra cardurilor */
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-top: 20px;
+    padding: 15px;
+}
+
+.no-comments {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.no-comments img {
+    max-width: 300px;
+    margin-bottom: 20px;
+}
+
+.no-comments h3 {
+    font-size: 1.5rem;
+    color: #433D6A;
+}
