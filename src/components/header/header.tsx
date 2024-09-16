@@ -1,27 +1,57 @@
 import "./header.css";
+import { Link, useLocation } from "react-router-dom";
+import SearchTopics from "./search-topics";
+import { useState, useEffect } from "react";
+import ScrollEffect from "./scroll-efects";
 
 export default function Header() {
+  const [isLoggedIn] = useState(false);
+  const location = useLocation();
+  const { isScrolled } = ScrollEffect();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
+
   return (
-    <div className="nav-container">
-      <div className="navbar-custom">
+    <div className={`nav-container`}>
+      <div
+        className={`navbar-custom ${
+          location.pathname === "/home" ? "navbar-home" : ""
+        } ${isScrolled && location.pathname === "/home" ? "scrolled" : ""}`}
+      >
         <div className="container">
-          <div className="site-name">Questify</div>
-          <form className="search-form">
-            <div className="search-container">
-              <div className="search-icon">
-                <i className="fas fa-search"></i>
-              </div>
-              <input
-                type="text"
-                placeholder="Ask something"
-                aria-label="Search"
-                className="search-input"
-              />
-            </div>
-          </form>
+          <Link
+            to="/home"
+            className={`site-name ${
+              location.pathname === "/home" ? "site-name-home" : ""
+            } ${isScrolled && location.pathname === "/home" ? "scrolled" : ""}`}
+          >
+            Questify
+          </Link>
+          <SearchTopics />
           <div className="btn-custom">
-            <button className="btn-login">Log In</button>
-            <button className="btn-signup">Sign Up</button>
+            {isLoggedIn ? (
+              <>
+                <Link to="/question" className="btn-question">
+                  Ask Question
+                </Link>
+                <Link to="/profile" className="btn-profile">
+                  <div className="profile">
+                    <i className="fa fa-user" aria-hidden="true"></i>
+                  </div>
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link to="/login" className="btn-login">
+                  Log In
+                </Link>
+                <Link to="/register" className="btn-signup">
+                  Sign Up
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </div>
