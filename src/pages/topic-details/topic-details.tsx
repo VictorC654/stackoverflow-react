@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react'; 
+import React, { useState, useEffect } from 'react';
 import { Card, Row, Col } from 'react-bootstrap';
 import './topic-details.css';
-import time from './time.png';
 import user from './user.png';
 import Ellipse from './Ellipse.png';
 
@@ -25,74 +24,100 @@ const generateRandomComment = (): string => {
   return comments[Math.floor(Math.random() * comments.length)];
 };
 
-// Simulate an API call with some initial data
-const fetchInitialComments = (): Promise<Comment[]> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      // Simulăm un răspuns gol inițial
-      resolve([]);
-    }, 1000); // Întârziere de 1 secundă pentru a simula apelul API
-  });
+// Funcție pentru a simula un apel API folosind fetch
+const fetchCommentsFromApi = async (): Promise<Comment[]> => {
+  try {
+    const response = await fetch('https://jsonplaceholder.typicode.com/comments?_limit=20');
+    if (!response.ok) {
+      throw new Error('Failed to fetch comments');
+    }
+    const data = await response.json();
+
+    const comments = data.map((comment: any, index: number) => ({
+      id: index + 1,
+      username: 'Alt user',
+      comment: generateRandomComment(),
+      date: new Date().toLocaleDateString('ro-RO'),
+      rating: 0, // Inițial toate rating-urile sunt zero
+    }));
+
+    return comments;
+  } catch (error) {
+    console.error('Error fetching comments:', error);
+    return [];
+  }
 };
 
-// Simulate fetching dynamic comments
-const fetchDynamicComments = (): Comment[] => {
-  return Array.from({ length: 20 }, (_, index) => ({
-    id: index + 1,
-    username: 'Alt user',
-    comment: generateRandomComment(),
-    date: new Date().toLocaleDateString('ro-RO'),
-    rating: 5,
-  }));
-};
+const Details = () => {
+  const [newMessage, setNewMessage] = useState(''); // State to store new comment
+  const [comments, setComments] = useState<Comment[]>([]); // State to store all comments
 
-export default function TopicDetails() {
-  const [comments, setComments] = useState<Comment[]>([]);
-  const [dynamicComments, setDynamicComments] = useState<Comment[]>([]);
-  const [newMessage, setNewMessage] = useState('');
-  const [hasAddedFirstComment, setHasAddedFirstComment] = useState(false);
+  // Clear localStorage if the session is new (for details page)
+  const clearCommentsOnProjectRestart = () => {
+    if (!sessionStorage.getItem('detailsSessionInitialized')) {
+      localStorage.removeItem('details-comments');
+      sessionStorage.setItem('detailsSessionInitialized', 'true');
+    }
+  };
 
-  // Simulăm apelul API pentru a obține comentariile inițiale
+  // Load comments from localStorage (specific for details page) or from API if empty
   useEffect(() => {
-    fetchInitialComments().then((initialComments) => {
-      setComments(initialComments);
-    });
+    clearCommentsOnProjectRestart();
+    const storedComments = JSON.parse(localStorage.getItem('details-comments') || '[]');
+
+    if (storedComments.length === 0) {
+      // Dacă nu există comentarii în localStorage, le încărcăm de la API
+      fetchCommentsFromApi().then(fetchedComments => {
+        setComments(fetchedComments);
+        localStorage.setItem('details-comments', JSON.stringify(fetchedComments)); // Salvează comentariile API
+      });
+    } else {
+      setComments(storedComments); // Load from localStorage if available
+    }
   }, []);
 
+  // Save comments to localStorage (specific for details page)
+  useEffect(() => {
+    if (comments.length > 0) {
+      localStorage.setItem('details-comments', JSON.stringify(comments));
+    }
+  }, [comments]);
+
+  // Function to handle input change
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewMessage(e.target.value);
   };
 
+  // Function to handle 'Enter' press and add a new comment at the start
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && newMessage.trim()) {
-      const newResponse: Comment = {
-        id: comments.length + dynamicComments.length + 1,
+      const newComment: Comment = {
+        id: comments.length + 1,
         username: 'Alt user',
         comment: newMessage,
         date: new Date().toLocaleDateString('ro-RO'),
-        rating: 5,
+        rating: 0, // Initially set the rating to 0
       };
 
-      // Check if the first comment was added
-      if (!hasAddedFirstComment) {
-        // Add dynamic comments when the first comment is added
-        const dynamicCommentsList = fetchDynamicComments();
-        setDynamicComments(dynamicCommentsList);
-        setHasAddedFirstComment(true);
-      }
-
-      // Add the new comment to the list
-      setComments([...comments, newResponse]);
-      setNewMessage(''); // Reset the input field
+      setComments([newComment, ...comments]); // Add the new comment at the start of the comments array
+      setNewMessage(''); // Clear the input field
     }
+  };
+
+  // Function to handle rating change
+  const handleRatingChange = (commentId: number, rating: number) => {
+    const updatedComments = comments.map((comment) =>
+      comment.id === commentId ? { ...comment, rating } : comment
+    );
+    setComments(updatedComments);
   };
 
   return (
     <div className="base-background">
+      {/* Existing card with static data */}
       <Card className="simple-user-card mb-4">
         <Card.Body>
           <div className="user-info">
-            <div className="comment-date">10.12.2003</div>
             <div className="user-image-container">
               <img src={Ellipse} alt="Ellipse" className="user-ellipse" />
               <img src={user} alt="user" className="user-image" />
@@ -106,10 +131,12 @@ export default function TopicDetails() {
                 </p>
               </div>
             </div>
+            <div className="comment-date">10.12.2003</div>
           </div>
         </Card.Body>
       </Card>
 
+      {/* Input field for adding new comments */}
       <div className="input-group mb-4 fixed-input">
         <input
           type="text"
@@ -117,72 +144,46 @@ export default function TopicDetails() {
           placeholder="Write your answer"
           value={newMessage}
           onChange={handleInputChange}
-          onKeyPress={handleKeyPress}
+          onKeyPress={handleKeyPress} // Handle key press (Enter)
         />
       </div>
 
       <div className="comments-container">
-        {comments.length > 0 || dynamicComments.length > 0 ? (
-          <Row>
-            {comments.map((comment) => (
-              <Col key={comment.id} md={12}>
-                <Card className="comment-card mb-3">
-                  <Card.Body>
-                    <div className="user-info">
-                      <div className="comment-date">{comment.date}</div>
-                      <div className="user-image-container">
-                        <img src={Ellipse} alt="Ellipse" className="user-ellipse" />
-                        <img src={user} alt="user" className="user-image" />
-                      </div>
-                      <div>
-                        <div className="username">{comment.username}</div>
-                        <div className="comment-content">{comment.comment}</div>
-                      </div>
+        <Row>
+          {comments.map((comment) => (
+            <Col key={comment.id} md={12}>
+              <Card className="comment-card mb-3">
+                <Card.Body>
+                  <div className="user-info">
+                    <div className="comment-date">{comment.date}</div>
+                    <div className="user-image-container">
+                      <img src={Ellipse} alt="Ellipse" className="user-ellipse" />
+                      <img src={user} alt="user" className="user-image" />
                     </div>
-                    <div className="rating-stars">
-                      {Array(5).fill(null).map((_, index) => (
-                        <span key={index} className="comment-star">★</span>
-                      ))}
+                    <div>
+                      <div className="username">{comment.username}</div>
+                      <div className="comment-content">{comment.comment}</div>
                     </div>
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))}
-
-            {/* Render dynamic comments after the first user comment */}
-            {hasAddedFirstComment &&
-              dynamicComments.map((comment) => (
-                <Col key={comment.id} md={12}>
-                  <Card className="comment-card mb-3">
-                    <Card.Body>
-                      <div className="user-info">
-                        <div className="comment-date">{comment.date}</div>
-                        <div className="user-image-container">
-                          <img src={Ellipse} alt="Ellipse" className="user-ellipse" />
-                          <img src={user} alt="user" className="user-image" />
-                        </div>
-                        <div>
-                          <div className="username">{comment.username}</div>
-                          <div className="comment-content">{comment.comment}</div>
-                        </div>
-                      </div>
-                      <div className="rating-stars">
-                        {Array(5).fill(null).map((_, index) => (
-                          <span key={index} className="comment-star">★</span>
-                        ))}
-                      </div>
-                    </Card.Body>
-                  </Card>
-                </Col>
-              ))}
-          </Row>
-        ) : (
-          <div className="no-comments">
-            <img src={time} alt="time" />
-            <h3>Simple user is waiting for your help.</h3>
-          </div>
-        )}
+                  </div>
+                  <div className="rating-stars">
+                    {Array(5).fill(null).map((_, index) => (
+                      <span
+                        key={index}
+                        className={`comment-star ${comment.rating > index ? 'selected' : ''}`}
+                        onClick={() => handleRatingChange(comment.id, index + 1)}
+                      >
+                        ★
+                      </span>
+                    ))}
+                  </div>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </Row>
       </div>
     </div>
   );
-}
+};
+
+export default Details;

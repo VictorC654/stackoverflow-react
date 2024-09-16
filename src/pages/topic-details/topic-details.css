@@ -26,7 +26,7 @@
 
 .user-info {
     display: flex;
-    align-items: center; /* Ensure both the image and text are vertically aligned */
+    align-items: flex-start; /* Aliniază imaginea și textul în partea de sus */
     margin-right: 15px;
     width: 100%;
     position: relative;
@@ -34,13 +34,15 @@
 
 .user-image-container {
     display: flex;
-    align-items: center;
-    margin-right: 10px; /* Decrease space between image and text */
-    width: 40px;
-    height: 40px;
+    justify-content: center; /* Centrează imaginea pe orizontală */
+    align-items: center;     /* Centrează imaginea pe verticală */
+    margin-right: 10px;
+    width: 40px; /* Dimensiunea elipsei */
+    height: 40px; 
     position: relative;
-    border-radius: 50%; /* Keep the container round */
-    overflow: hidden; /* Ensure the image stays inside the circle */
+    border-radius: 50%; /* Asigură forma circulară */
+    overflow: hidden;
+    background-color: #ebe9f8; /* Fundal vizibil pentru elipsă */
 }
 
 .user-image {
@@ -86,9 +88,15 @@
 }
 
 .comment-star {
+    cursor: pointer;
     margin-left: 5px;
-}
-
+    color: black; /* Inițial stelele sunt negre */
+  }
+  
+  .comment-star.selected {
+    color: gold; /* Culoarea galbenă pentru stelele selectate */
+  }
+  
 /* Stil pentru bara de input să fie fixă în partea de jos */
 .fixed-input {
     position: sticky;
