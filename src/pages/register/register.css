@@ -112,6 +112,7 @@ body {
     color:#808080; /* Text color  */
 }
 
+
 .show-hide-password {
     position: absolute !important;
     top: 25% !important;
@@ -119,9 +120,6 @@ body {
     height: 24px;
     transform: translateX(1990%) !important;
 }
-
-
-
 
 .input-container {
     position: relative; 
