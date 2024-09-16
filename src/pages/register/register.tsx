@@ -2,12 +2,53 @@ import './register.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import emailIcon from './email_icon.png';  
-import nameIcon from './name_icon.png';    
-import passwordIcon from './password_icon.png'; 
-import jobIcon from './job_icon.png';      
+import emailIcon from './email_icon.png';
+import nameIcon from './name_icon.png';
+import passwordIcon from './password_icon.png';
+import jobIcon from './job_icon.png';
 import hidePasswordIcon from './hide_pass.png';
 import showPasswordIcon from './show_pass.png';
+
+// Enum for job titles
+enum JobTitles {
+  Student = "Student",
+  Teacher = "Teacher",
+  FinanceManager = "Finance Manager",
+  Engineer = "Engineer",
+  BusinessAnalyst = "Business Analyst",
+  Nurse = "Nurse",
+  Architect = "Architect",
+  Writer = "Writer",
+  Electrician = "Electrician",
+  Accountant = "Accountant",
+  GraphicDesigner = "Graphic Designer"
+}
+
+// Array to hold job options
+const jobOptions: JobTitles[] = [
+  JobTitles.Student,
+  JobTitles.Teacher,
+  JobTitles.FinanceManager,
+  JobTitles.Engineer,
+  JobTitles.BusinessAnalyst,
+  JobTitles.Nurse,
+  JobTitles.Architect,
+  JobTitles.Writer,
+  JobTitles.Electrician,
+  JobTitles.Accountant,
+  JobTitles.GraphicDesigner
+];
+
+// Simulate API request
+const simulateApiRequest = async (formData: any) => {
+  // Simulates an API call
+  return new Promise<{ success: boolean }>((resolve) => {
+    setTimeout(() => {
+      // Simulate a success response
+      resolve({ success: true });
+    }, 1000); // Delay for simulation (1 second)
+  });
+};
 
 const RegisterForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -42,7 +83,7 @@ const RegisterForm: React.FC = () => {
     }
 
     if (touched.fullName) {
-      setNameError(isFullNameValid ? '' : 'Max length is 20s');
+      setNameError(isFullNameValid ? '' : 'Max length is 20 characters');
     }
 
     if (touched.password) {
@@ -52,10 +93,24 @@ const RegisterForm: React.FC = () => {
     setIsFormValid(isEmailValid && isFullNameValid && isPasswordValid && isJobTitleValid);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (isFormValid) {
-      navigate('/home');
+      // Simulate API request
+      const response = await simulateApiRequest({
+        email,
+        fullName,
+        password,
+        jobTitle
+      });
+
+      // Check API response and navigate
+      if (response.success) {
+        navigate('/login');
+      } else {
+        // Handle API failure
+        console.error('API request failed');
+      }
     }
   };
 
@@ -98,7 +153,7 @@ const RegisterForm: React.FC = () => {
           {nameError && <p className="error">{nameError}</p>}
         </div>
 
-        <div className="input-container"  style={{ position: 'relative' }}>
+        <div className="input-container" style={{ position: 'relative' }}>
           <img src={passwordIcon} alt="Password Icon" />
           <input
             type={showPassword ? "text" : "password"}
@@ -114,14 +169,7 @@ const RegisterForm: React.FC = () => {
             src={showPassword ? showPasswordIcon : hidePasswordIcon}
             alt={showPassword ? 'Hide password' : 'Show password'}
             onClick={toggleShowPassword}
-            style={{
-              position: 'absolute',
-              right: '10px',
-              top: '25%',
-              transform: 'translateX(2010%)',
-              cursor: 'pointer',
-              height: '24px'
-            }}
+            className="show-hide-password"
           />
           {passwordError && <p className="error">{passwordError}</p>}
         </div>
@@ -134,17 +182,11 @@ const RegisterForm: React.FC = () => {
             required
           >
             <option value="">Select your job title</option>
-            <option value="Student">Student</option>
-            <option value="Teacher">Teacher</option>
-            <option value="Finance Manager">Finance Manager</option>
-            <option value="Engineer">Engineer</option>
-            <option value="Business Analyst">Business Analyst</option>
-            <option value="Nurse">Nurse</option>
-            <option value="Architect">Architect</option>
-            <option value="Writer">Writer</option>
-            <option value="Electrician">Electrician</option>
-            <option value="Accountant">Accountant</option>
-            <option value="Graphic Designer">Graphic Designer</option>
+            {jobOptions.map((job) => (
+              <option key={job} value={job}>
+                {job}
+              </option>
+            ))}
           </select>
         </div>
 
