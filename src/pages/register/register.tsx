@@ -2,12 +2,12 @@ import './register.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import emailIcon from './email_icon.png';
-import nameIcon from './name_icon.png';
-import passwordIcon from './password_icon.png';
-import jobIcon from './job_icon.png';
-import hidePasswordIcon from './hide_pass.png';
-import showPasswordIcon from './show_pass.png';
+import emailIcon from './images/email_icon.png';
+import nameIcon from './images/name_icon.png';
+import passwordIcon from './images/password_icon.png';
+import jobIcon from './images/job_icon.png';
+import hidePasswordIcon from './images/hide_pass.png';
+import showPasswordIcon from './images/show_pass.png';
 
 // Enum for job titles
 enum JobTitles {

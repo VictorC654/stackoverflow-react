@@ -5,6 +5,7 @@ import Home from './pages/home/home';
 import Register from "./pages/register/register";
 import Login from "./pages/login/login";
 import TopicList from "./pages/topic-list/topic-list";
+import CreateQuestion from "./pages/create-question/create-question";
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
@@ -17,6 +18,7 @@ export default function App(){
                     <Route path="register" element={<Register />} />
                     <Route path="login" element={<Login />} />
                     <Route path="topic-list" element={<TopicList />} />
+                    <Route path="create-question" element={<CreateQuestion />} />
                 </Routes>
             </Layout>
         </Router>
