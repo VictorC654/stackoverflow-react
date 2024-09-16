@@ -1,0 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Bona+Nova:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+.nav-container {
+  display: flex;
+  justify-content: center;
+}
+
+.navbar-custom {
+  position: fixed;
+  top: 10px;
+  width: 1094px;
+  height: 50px;
+  margin: auto;
+  border-radius: 60px;
+  background-color: white;
+  padding: 10px 20px;
+  font-family: 'Montserrat', sans-serif;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1000;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.search-form {
+  display: flex;
+  justify-content: center;
+  flex-grow: 1;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  border-radius: 25px;
+  overflow: hidden;
+  background-color: #F0EEFF;
+  width: 626px;
+  padding: 5px;
+}
+
+.search-input {
+  border: none;
+  width: 100%;
+  padding: 5px;
+  outline: none;
+  background-color: #F0EEFF;
+  color: #7D7676;
+  border-radius: 25px;
+}
+
+.search-input:focus {
+  box-shadow: none;
+  background-color: #F0EEFF;
+}
+
+.search-input:hover {
+  box-shadow: none;
+  background-color: #F0EEFF;
+}
+
+.btn-custom {
+  display: flex;
+  gap: 20px;
+}
+
+.btn-login,
+.btn-signup {
+  padding: 10px 20px;
+  font-size: 13px;
+  border: none;
+  border-radius: 100px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.btn-login {
+  background-color: #C1BAEF;
+  color: black;
+}
+
+.btn-signup {
+  background-color: #9387DC;
+  color: white;
+}
+
+.btn-login:hover {
+  background-color: #afa6e9;
+  color: black;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.342);
+}
+
+.btn-signup:hover {
+  background-color: #8376d4;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.342);
+}
+
+.btn-login:active {
+  background-color: #c9b1e5 !important;
+  color: white;
+}
+
+.btn-signup:active {
+  background-color: #c9b1e5 !important;
+  color: white;
+}
+
+.site-name {
+  font-size: 20px;
+  font-weight: 600;
+  margin-right: 20px;
+  margin-left: 20px;
+  font-family: 'Bona Nova', sans-serif;
+  color: black;
+}
+
+.site-name:hover {
+  color: #8376d4 !important;
+}
+
+.search-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 100%;
+  background-color: transparent;
+}
+
+.search-icon :hover{
+  color: #8376d4 !important;
+}
+
+.error-message {
+  color: #433D6A;
+  font-size: 0.9em;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

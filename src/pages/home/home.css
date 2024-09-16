@@ -1,0 +1,12 @@
+.home {
+    background-color: #C1BAEF;
+    display: flex;
+    min-height: 90vh;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .home h1 {
+    color: black;
+  }
+  

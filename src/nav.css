@@ -1,0 +1,56 @@
+    .nav-header-container
+    {
+        align-items: center;
+        display:flex;
+        margin:0 auto;
+        width:100vh;
+        height:8vh;
+        padding:1.5em;
+        border-radius:2em;
+    }
+    .fix
+    {
+        height:8vh;
+    }
+    .nav-header-container-light
+    {
+        height: 8vh;
+        width:100vh;
+        display:flex;
+        position: fixed;
+        background:#ffffff;
+        align-items: center;
+        left: 50%;
+        top:8vh;
+        transform: translate(-50%, -50%);
+        padding:1.5em;
+        border-radius:2em;
+    }
+    .brand-name
+    {
+        color:black;
+        text-decoration:none;
+        font-weight:bold;
+        font-size:1.2em;
+    }
+    .nav-links
+    {
+        margin-left:auto;
+    }
+    .nav-links .nav-button
+    {
+        text-decoration:none;
+        background-color:blue;
+        padding:1em;
+        border-radius:1.5em;
+        font-weight:bold;
+    }
+     .search {
+        border:none;
+        border-radius: 1em;
+        width: 60vh;
+        margin-left:5vh;
+        outline: 0;
+        padding:.6em;
+        background: #F0EEFFDB;
+    }
