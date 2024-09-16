@@ -1,11 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
 .footer {
-  margin-top: auto;
+  z-index: 0;
+  position: relative;
   background-image: linear-gradient(#9387DC 1%, #4F4876 82%);
   font-family: 'Montserrat', sans-serif;
   text-align: center;
-  padding-top: 10px;
+  padding-top: 100px;
+  margin-top: -60px;
 }
 
 .sb_footer {
@@ -38,8 +40,8 @@ a {
   text-decoration: none !important; 
 }
 
-.socialmedia{
-  margin-left: 10px;
+.socialmedia {
+  margin-left: 5px;
 }
 
 .socialmedia i {
@@ -58,14 +60,18 @@ a {
   margin-bottom: 0.9rem;
   color: black;
   font-weight: bold;
+  justify-content: center;
+  text-align: left;
 }
 
 .sb_footer-links_div p {
   font-size: 13px;
   line-height: 10px;
+  margin-left: -20px;
   margin: 0.5rem 0;
   cursor: pointer;
   color: white;
+  text-align: left;
 }
 
 .sb_footer-links_div p:hover {

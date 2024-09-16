@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './create-question.css';
 
-// Enum for subjects
 enum Subject {
     Math = 'Math',
     Science = 'Science',
@@ -20,19 +20,42 @@ enum Subject {
 
 const subjects = Object.values(Subject);
 
-const CreateQuestion = () => {
-    const [title, setTitle] = useState('');
-    const [details, setDetails] = useState('');
-    const [subject, setSubject] = useState('');
+const CreateQuestion: React.FC = () => {
+    const [title, setTitle] = useState<string>('');
+    const [details, setDetails] = useState<string>('');
+    const [subject, setSubject] = useState<string>('');
+    const [error, setError] = useState<string | null>(null);
+    const navigate = useNavigate();
+
+    const isFormValid = () => {
+        return title.trim() !== '' && details.trim() !== '' && subject.trim() !== '';
+    };
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        console.log({
+
+        console.log('Form submitted');
+        console.log('Is form valid:', isFormValid());
+
+        if (!isFormValid()) {
+            console.log('Form is invalid');
+            setError('All fields are required');
+            return;
+        }
+
+        // Resetează eroarea la `null`
+        setError(null);
+        const mockData = {
             title,
             details,
             subject
-        });
-        // mock data
+        };
+
+        console.log('Sending mock data to API:', mockData);
+
+        setTimeout(() => {
+            navigate('/topic-details');
+        }, 1000);
     };
 
     return (
@@ -62,7 +85,9 @@ const CreateQuestion = () => {
                     value={subject}
                     onChange={(e) => setSubject(e.target.value)}
                 >
-                    <option value="" disabled>Select a subject</option>
+                    <option value="" disabled>
+                        Select a subject
+                    </option>
                     {subjects.map((subj) => (
                         <option key={subj} value={subj}>
                             {subj}
@@ -71,6 +96,9 @@ const CreateQuestion = () => {
                 </select>
 
                 <button type="submit">ASK YOUR QUESTION</button>
+
+                {/* Mesajul de eroare se află aici */}
+                {error && <p className="error-message">{error}</p>}
             </form>
         </div>
     );

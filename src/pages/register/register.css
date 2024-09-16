@@ -72,27 +72,30 @@ body {
     margin-top: 32px;
     display: flex;
     flex-direction: column;
+    outline: none;
 }
 
 .register-form button {
     font-weight: bold;
     cursor: pointer;
     padding: 15px 25px;
-    margin: 0 auto; /* Margine automată pentru aliniere centrală */
+    margin: 0 auto; 
     background: #C1BAEF;
     box-shadow: -2px 3px 4px 2px #00000040;
     border-radius: 80px;
     transition: background-color 0s ease;
     color: black;
     width: 89%;
-    border-radius: 0px; /* Colțuri rotunjite */
-    transform: translateY(18px) translateX(7px); /* Ajustează valorile pentru poziționare */
+    border-radius: 0px;
+    transform: translateY(18px) translateX(7px); 
+    outline: none;
 }
 
 
 .register-form button:hover {
     transition: background-color 0s ease;
     background: white;
+    outline: none;
 }
 
 /* Error messages */
