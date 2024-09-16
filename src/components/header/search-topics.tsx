@@ -1,6 +1,7 @@
 import "./header.css";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useState, useCallback, useEffect } from "react";
+import ScrollEffect from "./scroll-efects";
 
 const debounce = (func: Function, delay: number) => {
   let timer: NodeJS.Timeout;
@@ -15,6 +16,7 @@ export default function Header() {
   const navigate = useNavigate();
   const location = useLocation();
   const [errorMessage, setErrorMessage] = useState("");
+  const { isScrolled } = ScrollEffect();
 
   const handleSearch = (searchTerm: string) => {
     if (searchTerm.trim().length >= 3) {
@@ -56,7 +58,11 @@ export default function Header() {
 
   return (
     <form className="search-form" onSubmit={handleSearchSubmit}>
-      <div className="search-container">
+      <div
+        className={`search-container ${
+          location.pathname === "/home" ? "search-container-home" : ""
+        } ${isScrolled && location.pathname === "/home" ? "scrolled" : ""}`}
+      >
         <div className="search-icon" onClick={handleSearchIconClick}>
           <i className="fas fa-search"></i>
         </div>
