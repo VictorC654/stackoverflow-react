@@ -6,6 +6,7 @@ import Login from "./pages/login/login";
 import TopicList from "./pages/topic-list/topic-list";
 import CreateQuestion from "./pages/create-question/create-question";
 import TopicDetails from "./pages/topic-details/topic-details";
+import NoAnswer from "./pages/no-answer/no-answer";
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
@@ -20,6 +21,7 @@ export default function App(){
                     <Route path="topic-list" element={<TopicList />} />
                     <Route path="create-question" element={<CreateQuestion />} />
                     <Route path="topic-details" element={<TopicDetails />} />
+                    <Route path="no-answer" element={<NoAnswer />} />
                 </Routes>
             </Layout>
         </Router>
