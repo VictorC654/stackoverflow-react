@@ -21,7 +21,7 @@ export default function Header() {
   const handleSearch = (searchTerm: string) => {
     if (searchTerm.trim().length >= 3) {
       const encodedSearchTerm = encodeURIComponent(searchTerm.trim());
-      navigate(`/topic-list?query=${encodedSearchTerm}`);
+      navigate(`/topics?query=${encodedSearchTerm}`);
       setErrorMessage("");
     } else {
       setErrorMessage("Please enter at least 3 characters.");
