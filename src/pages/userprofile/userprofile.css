@@ -1,0 +1,150 @@
+.user-profile-container-center
+{
+    width:100%;
+    /*min-height:80vh;*/
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+.user-profile-container
+{
+    display:flex;
+    flex-direction:column;
+    padding:50px;
+    margin-top:173px;
+    margin-bottom:173px;
+    border-radius:3em;
+    background:#FFFFFF80;
+    width:1094px;
+    height:735px;
+    box-shadow: 0px 16px 32px -8px #0C0C0D66;
+}
+.user-profile-top-container
+{
+    height:141px;
+    display:flex;
+    flex-direction:row;
+    justify-content: center;
+}
+.user-profile-info-container
+{
+    margin-left:20px;
+    flex-direction: column;
+    display:flex;
+}
+.user-profile-info-name
+{
+    margin-top:13px;
+    font-weight:bold;
+    font-size:30px;
+}
+.user-profile-pic
+{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    font-size:70px;
+    background-color:#D7D3F1;
+    border-radius:100px;
+    width:110px;
+    height:110px;
+}
+.user-profile-info-desc
+{
+    display:flex;
+    width:610px;
+    color:#7D7676;
+}
+.user-profile-info-desc-section
+{
+    margin-right:10px;
+}
+.user-profile-info-desc-section i
+{
+    margin-right:5px;
+}
+.aqr-container
+{
+    margin-top:10px;
+}
+.aqr-progress-button
+{
+    display:inline-block;
+    border:none;
+    background:none;
+    border-top:2px solid black;
+    outline:none;
+    width:257px;
+    padding-top:5px;
+    font-size:20px;
+    height:31px;
+    transition:.5s all ease;
+}
+.aqr-progress-active
+{
+    border-top:5px solid black;
+    font-weight:bold;
+}
+.aqr-progress-active:hover
+{
+    border-top:5px solid black;
+    font-weight:bold;
+}
+.aqr-cards-container
+{
+    display:flex;
+    flex-direction: column;
+    width:100%;
+    margin-top:50px;
+}
+.answers-card
+{
+    background:white;
+    margin-bottom:10px;
+    width:994px;
+    padding:25px;
+    box-shadow: 0px 8px 32px -8px #0C0C0D66;
+    border-radius:15px;
+    height:172px;
+}
+.answers-card-user-profile
+{
+    /*margin-left:20px;*/
+    flex-direction: row;
+    display:flex;
+}
+.answers-card-user-pic
+{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    font-size:25px;
+    background-color:#D7D3F1;
+    border-radius:100px;
+    width:40px;
+    height:40px;
+}
+.answers-card-user-name
+{
+    margin-top:7px;
+    margin-left:15px;
+    font-size:20px;
+    font-weight:bold;
+}
+.answers-card-short-desc
+{
+    margin-top:20px;
+    font-size:18px;
+}
+.answers-card-rating
+{
+    margin-top:20px;
+    font-size:20px;
+    display:flex;
+    justify-content: flex-end;
+}
+.answers-card-rating i:hover
+{
+    cursor:pointer;
+}
+

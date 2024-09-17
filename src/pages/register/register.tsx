@@ -8,7 +8,7 @@ import passwordIcon from './password_icon.png';
 import jobIcon from './job_icon.png';      
 import hidePasswordIcon from './hide_pass.png';
 import showPasswordIcon from './show_pass.png';
-
+import {registerUser} from "../../services/apiService";
 const RegisterForm: React.FC = () => {
   const [email, setEmail] = useState('');
   const [fullName, setFullName] = useState('');
@@ -52,10 +52,14 @@ const RegisterForm: React.FC = () => {
     setIsFormValid(isEmailValid && isFullNameValid && isPasswordValid && isJobTitleValid);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (isFormValid) {
-      navigate('/home');
+    try {
+      let user = { email, fullName, password, jobTitle};
+      await registerUser(user);
+      navigate('/login');
+    } catch (e) {
+      console.log(e);
     }
   };
 

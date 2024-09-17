@@ -8,6 +8,7 @@ import TopicList from "./pages/topic-list/topic-list";
 import TopicDetails from "./pages/topic-details/topic-details";
 import NoAnswer from "./pages/no-answer/no-answer";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import UserProfile from "./pages/userprofile/UserProfile";
 
 export default function App(){
     return (
@@ -20,6 +21,7 @@ export default function App(){
                     <Route path="topic-list" element={<TopicList />} />
                     <Route path="topic-details" element={<TopicDetails />} />
                     <Route path="no-answer" element={<NoAnswer />} />
+                    <Route path="profile" element={<UserProfile/>} />
                 </Routes>
             </Layout>
         </Router>
