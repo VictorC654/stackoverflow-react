@@ -1,126 +1,239 @@
 .base-background {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: #ebe9f8;
-  width: 100%;
-  max-width: 1094px;
-  border-radius: 10px;
-  margin: 50px auto;
-  padding: 30px 52px;
-  margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #ebe9f8;
+    width: 100%;
+    max-width: 1100px;
+    border-radius: 10px;
+    margin: 50px auto;
+    padding: 30px 40px;
+    margin-top: 100px;
+    margin-bottom: 100px; /* Adaugă mai mult spațiu între zona cardurilor și toolbarul de jos */
 }
 
-.comment-card,
+.simple-user-card,
+.comment-card {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 95%; /* Asigură spațiu egal la margini */
+    margin: 10px auto; /* Auto pentru centrarea pe orizontală */
+    min-height: 100px;
+}
+
+/* Design for the Simple User Card */
 .simple-user-card {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  width: 100%;
-  min-height: 150px;
+    display: flex;
+    flex-direction: row; /* Asigură poziționarea orizontală a elipsei și a textului */
+    align-items: flex-start; /* Aliniază vertical elipsa și textul */
+    position: relative;
+    padding: 25px; /* Micșorează padding-ul general pentru a face cardul mai mic */
+    min-height: 100px; /* Poți ajusta înălțimea minimă a cardului */
 }
 
-.user-info {
-  display: flex;
-  align-items: flex-start;
-  margin-right: 15px;
-  width: 100%;
-  position: relative;
+.simple-user-card .user-info {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 0;
 }
 
-.user-image-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-right: 10px;
-  width: 40px;
-  height: 40px;
-  position: relative;
-  border-radius: 50%;
-  overflow: hidden;
-  background-color: #ebe9f8;
+.simple-user-card .user-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 15px;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: #ebe9f8;
+    overflow: hidden;
+    margin-top: 8px;
 }
 
-.user-image {
-  position: absolute;
-  width: 60%;
-  height: 60%;
-  top: 20%;
-  left: 20%;
-  z-index: 1;
-  object-fit: contain;
+.simple-user-card .user-image {
+    position: absolute;
+    width: 11%; /* Reduci puțin dimensiunea pentru a se potrivi în elipsă */
+    height: 11%;
+    object-fit: contain; /* Ajustează imaginea să acopere uniform elipsa */
 }
 
-.username {
-  font-weight: bold;
-  font-size: 1.2rem;
-  margin-right: 10px;
-  line-height: 1.2;
+.simple-user-card .comment-content {
+    margin-top: 0; /* Adaugă un spațiu mai mare între titlu și text */
+    padding-top: 0; /* Adaugă padding suplimentar în partea de sus pentru a centra conținutul */
+    padding-bottom: 5px; /* Adaugă padding în partea de jos pentru echilibru */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centrează conținutul vertical */
+    text-align: left; /* Asigură-te că textul începe din partea stângă */
+    width: 100%; /* Asigură-te că ocupă întreaga lățime */
 }
 
-.comment-content {
-  font-size: 1rem;
-  color: #433d6a;
-  margin-top: 5px;
+.simple-user-card .username {
+    font-weight: bold;
+    font-size: 1.4rem;
+    margin-right: 0;
+    margin-top: 0; 
+    color: #000000;
+    margin-top: 5px; /* Adaugă spațiu deasupra elipsei */
 }
 
-.comment-date {
-  font-size: 0.85rem;
-  color: #999;
-  text-align: right;
-  position: absolute;
-  top: -10px;
-  right: 0px;
+.simple-user-card .comment-content strong {
+    color: #2d2b6a;
+    font-size: 1.2rem;
 }
 
+.simple-user-card .comment-content p {
+    font-size: 1.1rem; /* Same size as the 'Lorem ipsum' text */
+    color: #433D6A;
+    margin-top: 5px;
+}
+
+/* Smaller description text positioned below the main text */
+.simple-user-card .description-text {
+    font-size: 0.9rem; /* Slightly smaller for the description */
+    color: #433D6A;
+    margin-top: 5px;
+    line-height: 1.4;
+}
+
+.simple-user-card .comment-date {
+    font-size: 1rem;
+    color: #999;
+    text-align: right;
+    position: absolute;
+    top: 30px;
+    right: 30px;
+}
+/* Design for the Alt User Card */
+.alt-user-card {
+    display: flex;
+    flex-direction: row; 
+    align-items: flex-start; /* Aliniază vertical elipsa și textul */
+    position: relative;
+    padding: 15px; /* Micșorează padding-ul general pentru a face cardul mai mic */
+    min-height: 80px; /* Poți ajusta înălțimea minimă a cardului */
+}
+
+.comment-card {
+    display: flex;
+    flex-direction: column; /* Aliniere pe verticală */
+    justify-content: center; /* Centrează conținutul pe verticală */
+    align-items: flex-start;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 95%; /* Asigură spațiu egal la margini */
+    margin: 10px auto 100px; /* Auto pentru centrarea pe orizontală */
+    position: relative;
+    min-height: 100px; /* Poți ajusta înălțimea minimă */
+}
+
+.comment-card .user-info {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 0; /* Spațiu între imagine și text */
+}
+
+.comment-card .user-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 15px;
+    width: 35px; /* Ajustează dimensiunea imaginii */
+    height: 35px;
+    border-radius: 50%;
+    background-color: #ebe9f8;
+    overflow: hidden;
+    margin-top: 5px;
+    margin-bottom: 60px; 
+}
+
+.comment-card .user-image {
+    position: absolute;
+    width: 12%; /* Reduci puțin dimensiunea pentru a se potrivi în elipsă */
+    height: 12%;
+    object-fit: contain;
+    margin-bottom: 2px; 
+}
+
+.comment-card .username {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-right: 10px;
+    color: #000000;
+    margin-top: 5px;
+}
+
+.comment-card .comment-content {
+    font-size: 1.2rem; /* Ajustează dimensiunea textului */
+    color: #433D6A;
+    margin-top: 5px;
+    text-align: center; /* Centrează textul pe orizontală */
+    width: 100%; /* Asigură-te că ocupă întreaga lățime */
+}
+
+.comment-card .comment-date {
+    font-size: 0.9rem;
+    color: #999;
+    text-align: right;
+    position: absolute;
+    top: 30px;
+    right: 30px;
+}
+
+/* Rating Stars */
 .rating-stars {
-  display: flex;
-  justify-content: flex-end;
-  color: gold;
-  font-size: 1.25rem;
-  position: absolute;
-  bottom: 10px;
-  right: 20px;
+    display: flex;
+    justify-content: flex-end;
+    font-size: 1.3rem;
+    position: absolute;
+    bottom: 20px;
+    right: 25px;
 }
 
 .comment-star {
-  cursor: pointer;
-  margin-left: 5px;
-  color: black;
+    cursor: pointer;
+    margin-left: 5px;
+    color: #ccc;
 }
 
 .comment-star.selected {
-  color: gold;
+    color: gold;
 }
 
+/* Styling for input section */
 .fixed-input {
-  position: sticky;
-  bottom: 0;
-  width: 100%;
-  background-color: white;
-  z-index: 100;
-  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  margin-top: 20px;
-  padding: 15px;
+    position: sticky;
+    bottom: 0;
+    width: 95%; /* Ajustare pentru a fi la fel ca dimensiunea cardurilor */
+    background-color: white;
+    z-index: 100;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-top: 20px; /* Adaugă mai mult spațiu între cardurile Alt user și bara de input */
+    padding: 15px;
+    margin-left: auto;
+    margin-right: auto; /* Centrare pe orizontală */
 }
 
 .no-comments {
-  text-align: center;
-  margin-top: 50px;
+    text-align: center;
+    margin-top: 50px;
 }
 
 .no-comments img {
-  max-width: 300px;
-  margin-bottom: 20px;
+    max-width: 300px;
+    margin-bottom: 20px;
 }
 
 .no-comments h3 {
-  font-size: 1.5rem;
-  color: #433d6a;
+    font-size: 1.5rem;
+    color: #433D6A;
 }
