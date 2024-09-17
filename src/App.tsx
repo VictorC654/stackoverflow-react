@@ -20,7 +20,7 @@ export default function App(){
                     <Route path="home" element={<Home />} />
                     <Route path="register" element={<Register />} />
                     <Route path="login" element={<Login />} />
-                    <Route path="create-question" element={<CreateQuestion />} 
+                    <Route path="create-question" element={<CreateQuestion />} />
                     <Route path="topics" element={<TopicList />} />
                     <Route path="topic-details" element={<TopicDetails />} />
                     <Route path="no-answer" element={<NoAnswer />} />
