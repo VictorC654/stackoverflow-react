@@ -9,6 +9,36 @@ import jobIcon from './job_icon.png';
 import hidePasswordIcon from './hide_pass.png';
 import showPasswordIcon from './show_pass.png';
 import {registerUser} from "../../services/apiService";
+
+// Enum for job titles
+enum JobTitles {
+  Student = "Student",
+  Teacher = "Teacher",
+  FinanceManager = "Finance Manager",
+  Engineer = "Engineer",
+  BusinessAnalyst = "Business Analyst",
+  Nurse = "Nurse",
+  Architect = "Architect",
+  Writer = "Writer",
+  Electrician = "Electrician",
+  Accountant = "Accountant",
+  GraphicDesigner = "Graphic Designer"
+}
+
+// Array to hold job options
+const jobOptions: JobTitles[] = [
+  JobTitles.Student,
+  JobTitles.Teacher,
+  JobTitles.FinanceManager,
+  JobTitles.Engineer,
+  JobTitles.BusinessAnalyst,
+  JobTitles.Nurse,
+  JobTitles.Architect,
+  JobTitles.Writer,
+  JobTitles.Electrician,
+  JobTitles.Accountant,
+  JobTitles.GraphicDesigner
+];
 const RegisterForm: React.FC = () => {
   const [email, setEmail] = useState('');
   const [fullName, setFullName] = useState('');
@@ -42,7 +72,7 @@ const RegisterForm: React.FC = () => {
     }
 
     if (touched.fullName) {
-      setNameError(isFullNameValid ? '' : 'Max length is 20s');
+      setNameError(isFullNameValid ? '' : 'Max length is 20 characters');
     }
 
     if (touched.password) {
@@ -51,7 +81,7 @@ const RegisterForm: React.FC = () => {
 
     setIsFormValid(isEmailValid && isFullNameValid && isPasswordValid && isJobTitleValid);
   };
-
+automatically
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
@@ -101,7 +131,7 @@ const RegisterForm: React.FC = () => {
           {nameError && <p className="error">{nameError}</p>}
         </div>
 
-        <div className="input-container"  style={{ position: 'relative' }}>
+        <div className="input-container" style={{ position: 'relative' }}>
           <img src={passwordIcon} alt="Password Icon" />
           <input
             type={showPassword ? "text" : "password"}
@@ -117,14 +147,7 @@ const RegisterForm: React.FC = () => {
             src={showPassword ? showPasswordIcon : hidePasswordIcon}
             alt={showPassword ? 'Hide password' : 'Show password'}
             onClick={toggleShowPassword}
-            style={{
-              position: 'absolute',
-              right: '10px',
-              top: '25%',
-              transform: 'translateX(2010%)',
-              cursor: 'pointer',
-              height: '24px'
-            }}
+            className="show-hide-password"
           />
           {passwordError && <p className="error">{passwordError}</p>}
         </div>
@@ -137,17 +160,11 @@ const RegisterForm: React.FC = () => {
             required
           >
             <option value="">Select your job title</option>
-            <option value="Student">Student</option>
-            <option value="Teacher">Teacher</option>
-            <option value="Finance Manager">Finance Manager</option>
-            <option value="Engineer">Engineer</option>
-            <option value="Business Analyst">Business Analyst</option>
-            <option value="Nurse">Nurse</option>
-            <option value="Architect">Architect</option>
-            <option value="Writer">Writer</option>
-            <option value="Electrician">Electrician</option>
-            <option value="Accountant">Accountant</option>
-            <option value="Graphic Designer">Graphic Designer</option>
+            {jobOptions.map((job) => (
+              <option key={job} value={job}>
+                {job}
+              </option>
+            ))}
           </select>
         </div>
 

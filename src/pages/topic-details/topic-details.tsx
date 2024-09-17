@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'; 
 import { Card, Row, Col } from 'react-bootstrap';
 import './topic-details.css';
 import user from './user.png';
@@ -24,59 +24,45 @@ const generateRandomComment = (): string => {
   return comments[Math.floor(Math.random() * comments.length)];
 };
 
-// Funcție pentru a simula un apel API folosind fetch
-const fetchCommentsFromApi = async (): Promise<Comment[]> => {
-  try {
-    const response = await fetch('https://jsonplaceholder.typicode.com/comments?_limit=20');
-    if (!response.ok) {
-      throw new Error('Failed to fetch comments');
+// Funcție pentru a simula un apel API folosind localStorage
+const simulateApiCall = (): Promise<Comment[]> => {
+  return new Promise((resolve) => {
+    const storedComments = JSON.parse(localStorage.getItem('details-comments') || '[]');
+    if (storedComments.length > 0) {
+      resolve(storedComments);
+    } else {
+      const simulatedComments: Comment[] = Array.from({ length: 10 }, (_, index) => ({
+        id: index + 1,
+        username: 'Alt user',
+        comment: generateRandomComment(),
+        date: new Date().toLocaleDateString('ro-RO'),
+        rating: 5, // Setăm rating-ul inițial la 5 pentru toate comentariile generate
+      }));
+      localStorage.setItem('details-comments', JSON.stringify(simulatedComments));
+      resolve(simulatedComments);
     }
-    const data = await response.json();
-
-    const comments = data.map((comment: any, index: number) => ({
-      id: index + 1,
-      username: 'Alt user',
-      comment: generateRandomComment(),
-      date: new Date().toLocaleDateString('ro-RO'),
-      rating: 0, // Inițial toate rating-urile sunt zero
-    }));
-
-    return comments;
-  } catch (error) {
-    console.error('Error fetching comments:', error);
-    return [];
-  }
+  });
 };
 
 const Details = () => {
   const [newMessage, setNewMessage] = useState(''); // State to store new comment
   const [comments, setComments] = useState<Comment[]>([]); // State to store all comments
 
-  // Clear localStorage if the session is new (for details page)
-  const clearCommentsOnProjectRestart = () => {
-    if (!sessionStorage.getItem('detailsSessionInitialized')) {
-      localStorage.removeItem('details-comments');
-      sessionStorage.setItem('detailsSessionInitialized', 'true');
-    }
-  };
-
-  // Load comments from localStorage (specific for details page) or from API if empty
   useEffect(() => {
-    clearCommentsOnProjectRestart();
-    const storedComments = JSON.parse(localStorage.getItem('details-comments') || '[]');
-
-    if (storedComments.length === 0) {
-      // Dacă nu există comentarii în localStorage, le încărcăm de la API
-      fetchCommentsFromApi().then(fetchedComments => {
-        setComments(fetchedComments);
-        localStorage.setItem('details-comments', JSON.stringify(fetchedComments)); // Salvează comentariile API
-      });
-    } else {
-      setComments(storedComments); // Load from localStorage if available
+    // Verificăm dacă aplicația este pornită pentru prima dată în sesiune
+    if (!sessionStorage.getItem('initialized')) {
+      // Ștergem comentariile salvate dacă este prima pornire a aplicației
+      localStorage.removeItem('details-comments');
+      sessionStorage.setItem('initialized', 'true');
     }
+
+    // Simulăm preluarea comentariilor
+    simulateApiCall().then(fetchedComments => {
+      setComments(fetchedComments);
+    });
   }, []);
 
-  // Save comments to localStorage (specific for details page)
+  // Save comments to localStorage when comments are updated
   useEffect(() => {
     if (comments.length > 0) {
       localStorage.setItem('details-comments', JSON.stringify(comments));
@@ -114,7 +100,6 @@ const Details = () => {
 
   return (
     <div className="base-background">
-      {/* Existing card with static data */}
       <Card className="simple-user-card mb-4">
         <Card.Body>
           <div className="user-info">
@@ -136,7 +121,6 @@ const Details = () => {
         </Card.Body>
       </Card>
 
-      {/* Input field for adding new comments */}
       <div className="input-group mb-4 fixed-input">
         <input
           type="text"
