@@ -1,0 +1,52 @@
+.topic-not-found-container .card {
+    width: 1094px;
+    margin: 100px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #ebe9f8;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 60px;
+}
+
+.topic-not-found-container .card-img-top {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    margin-top: 70px;
+    margin-bottom: 20px;
+}
+
+.topic-not-found-container .card-body {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: #ebe9f8;
+}
+
+.topic-not-found-container .card-text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 25px;
+    margin-bottom: 60px;
+}
+
+.topic-not-found-container .ask-button {
+    background-color: #9387DC;
+    border: none;
+    padding: 10px 30px; 
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;
+    color: #FFFFFF;
+    font-weight: 800;
+    font-size: 20px;
+    margin-bottom: 45px;
+    transition: background-color 0.3s ease, transform 0.3s ease; 
+}
+
+.topic-not-found-container .ask-button:hover {
+    background-color: #7f66c1; 
+    transform: scale(1.05); 
+}
