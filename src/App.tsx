@@ -10,6 +10,7 @@ import NoAnswer from "./pages/no-answer/no-answer";
 import TopicNotFound from './pages/topic-not-found/topic-not-found';
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import UserProfile from "./pages/userprofile/UserProfile";
 
 export default function App(){
     return (

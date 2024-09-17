@@ -2,12 +2,13 @@ import './register.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import emailIcon from './images/email_icon.png';
-import nameIcon from './images/name_icon.png';
-import passwordIcon from './images/password_icon.png';
-import jobIcon from './images/job_icon.png';
-import hidePasswordIcon from './images/hide_pass.png';
-import showPasswordIcon from './images/show_pass.png';
+import emailIcon from './email_icon.png';  
+import nameIcon from './name_icon.png';    
+import passwordIcon from './password_icon.png'; 
+import jobIcon from './job_icon.png';      
+import hidePasswordIcon from './hide_pass.png';
+import showPasswordIcon from './show_pass.png';
+import {registerUser} from "../../services/apiService";
 
 // Enum for job titles
 enum JobTitles {
@@ -38,18 +39,6 @@ const jobOptions: JobTitles[] = [
   JobTitles.Accountant,
   JobTitles.GraphicDesigner
 ];
-
-// Simulate API request
-const simulateApiRequest = async (formData: any) => {
-  // Simulates an API call
-  return new Promise<{ success: boolean }>((resolve) => {
-    setTimeout(() => {
-      // Simulate a success response
-      resolve({ success: true });
-    }, 1000); // Delay for simulation (1 second)
-  });
-};
-
 const RegisterForm: React.FC = () => {
   const [email, setEmail] = useState('');
   const [fullName, setFullName] = useState('');
@@ -92,25 +81,15 @@ const RegisterForm: React.FC = () => {
 
     setIsFormValid(isEmailValid && isFullNameValid && isPasswordValid && isJobTitleValid);
   };
-
-  const handleSubmit = async (e: React.FormEvent) => {
+automatically
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (isFormValid) {
-      // Simulate API request
-      const response = await simulateApiRequest({
-        email,
-        fullName,
-        password,
-        jobTitle
-      });
-
-      // Check API response and navigate
-      if (response.success) {
-        navigate('/login');
-      } else {
-        // Handle API failure
-        console.error('API request failed');
-      }
+    try {
+      let user = { email, fullName, password, jobTitle};
+      await registerUser(user);
+      navigate('/login');
+    } catch (e) {
+      console.log(e);
     }
   };
 

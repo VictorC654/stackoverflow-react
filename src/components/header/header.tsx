@@ -3,9 +3,9 @@ import { Link, useLocation } from "react-router-dom";
 import SearchTopics from "./search-topics";
 import { useState, useEffect } from "react";
 import ScrollEffect from "./scroll-efects";
+import { checkIfUserLoggedIn } from "../../services/apiService";
 
 export default function Header() {
-  const [isLoggedIn] = useState(false);
   const location = useLocation();
   const { isScrolled } = ScrollEffect();
 
@@ -31,9 +31,9 @@ export default function Header() {
           </Link>
           <SearchTopics />
           <div className="btn-custom">
-            {isLoggedIn ? (
+            {checkIfUserLoggedIn("currentUser") ? (
               <>
-                <Link to="/question" className="btn-question">
+                <Link to="/home" className="btn-question">
                   Ask Question
                 </Link>
                 <Link to="/profile" className="btn-profile">

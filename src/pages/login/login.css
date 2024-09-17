@@ -122,5 +122,17 @@
     color:black;
     transition:1s all ease;
 }
-
+.aqr-read-more
+{
+    display:flex;
+    justify-content: center;
+    font-size:23px;
+    color:black;
+    font-weight:bold;
+    margin-top:30px;
+}
+.aqr-read-more:hover
+{
+    cursor:pointer;
+}
 
