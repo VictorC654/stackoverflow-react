@@ -1,15 +1,14 @@
-import './register.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import emailIcon from './email_icon.png';  
-import nameIcon from './name_icon.png';    
-import passwordIcon from './password_icon.png'; 
-import jobIcon from './job_icon.png';      
-import hidePasswordIcon from './hide_pass.png';
-import showPasswordIcon from './show_pass.png';
-import {registerUser} from "../../services/apiService";
-
+import "./register.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import emailIcon from "./images/email_icon.png";
+import nameIcon from "./images/name_icon.png";
+import passwordIcon from "./images/password_icon.png";
+import jobIcon from "./images/job_icon.png";
+import hidePasswordIcon from "./images/hide_pass.png";
+import showPasswordIcon from "./images/show_pass.png";
+import { registerUser } from "services/apiService";
 // Enum for job titles
 enum JobTitles {
   Student = "Student",
@@ -22,7 +21,7 @@ enum JobTitles {
   Writer = "Writer",
   Electrician = "Electrician",
   Accountant = "Accountant",
-  GraphicDesigner = "Graphic Designer"
+  GraphicDesigner = "Graphic Designer",
 }
 
 // Array to hold job options
@@ -37,22 +36,22 @@ const jobOptions: JobTitles[] = [
   JobTitles.Writer,
   JobTitles.Electrician,
   JobTitles.Accountant,
-  JobTitles.GraphicDesigner
+  JobTitles.GraphicDesigner,
 ];
 const RegisterForm: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [fullName, setFullName] = useState('');
-  const [nameError, setNameError] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordError, setPasswordError] = useState('');
+  const [email, setEmail] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [nameError, setNameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [jobTitle, setJobTitle] = useState('');
+  const [jobTitle, setJobTitle] = useState("");
   const [isFormValid, setIsFormValid] = useState(false);
   const [touched, setTouched] = useState({
     fullName: false,
     email: false,
-    password: false
+    password: false,
   });
 
   const navigate = useNavigate();
@@ -62,32 +61,35 @@ const RegisterForm: React.FC = () => {
   }, [email, fullName, password, jobTitle]);
 
   const validateForm = () => {
-    const isEmailValid = email.includes('@');
+    const isEmailValid = email.includes("@");
     const isFullNameValid = fullName.length <= 20;
     const isPasswordValid = password.length >= 6;
     const isJobTitleValid = jobTitle.length > 0;
 
     if (touched.email) {
-      setEmailError(isEmailValid ? '' : 'Email not valid');
+      setEmailError(isEmailValid ? "" : "Email not valid");
     }
 
     if (touched.fullName) {
-      setNameError(isFullNameValid ? '' : 'Max length is 20 characters');
+      setNameError(isFullNameValid ? "" : "Max length is 20 characters");
     }
 
     if (touched.password) {
-      setPasswordError(isPasswordValid ? '' : 'Password must be at least 6 characters');
+      setPasswordError(
+        isPasswordValid ? "" : "Password must be at least 6 characters"
+      );
     }
 
-    setIsFormValid(isEmailValid && isFullNameValid && isPasswordValid && isJobTitleValid);
+    setIsFormValid(
+      isEmailValid && isFullNameValid && isPasswordValid && isJobTitleValid
+    );
   };
-automatically
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      let user = { email, fullName, password, jobTitle};
+      let user = { email, fullName, password, jobTitle };
       await registerUser(user);
-      navigate('/login');
+      navigate("/login");
     } catch (e) {
       console.log(e);
     }
@@ -108,7 +110,7 @@ automatically
             value={email}
             onChange={(e) => {
               setEmail(e.target.value);
-              setTouched(prev => ({ ...prev, email: true }));
+              setTouched((prev) => ({ ...prev, email: true }));
             }}
             required
             placeholder="Email"
@@ -123,7 +125,7 @@ automatically
             value={fullName}
             onChange={(e) => {
               setFullName(e.target.value);
-              setTouched(prev => ({ ...prev, fullName: true }));
+              setTouched((prev) => ({ ...prev, fullName: true }));
             }}
             required
             placeholder="Full name"
@@ -131,21 +133,21 @@ automatically
           {nameError && <p className="error">{nameError}</p>}
         </div>
 
-        <div className="input-container" style={{ position: 'relative' }}>
+        <div className="input-container" style={{ position: "relative" }}>
           <img src={passwordIcon} alt="Password Icon" />
           <input
             type={showPassword ? "text" : "password"}
             value={password}
             onChange={(e) => {
               setPassword(e.target.value);
-              setTouched(prev => ({ ...prev, password: true }));
+              setTouched((prev) => ({ ...prev, password: true }));
             }}
             required
             placeholder="Password"
           />
           <img
             src={showPassword ? showPasswordIcon : hidePasswordIcon}
-            alt={showPassword ? 'Hide password' : 'Show password'}
+            alt={showPassword ? "Hide password" : "Show password"}
             onClick={toggleShowPassword}
             className="show-hide-password"
           />
@@ -171,7 +173,7 @@ automatically
         <button
           type="submit"
           disabled={!isFormValid}
-          className={isFormValid ? 'btn-active' : 'btn-inactive'}
+          className={isFormValid ? "btn-active" : "btn-inactive"}
         >
           Sign Up
         </button>
