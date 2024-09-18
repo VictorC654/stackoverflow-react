@@ -35,6 +35,19 @@
   transform: translateY(-5px);
 }
 
+
+/* Ensure the single result card takes up the full width */
+.topic-list-page .card-container {
+  width: 100%;
+}
+
+.topic-list-page .single-result-card {
+  display: flex;
+  justify-content: flex-start; /* Align to the left rather than centered */
+  width: 100%;
+}
+
+
 .topic-list-page .card-body {
   display: flex;
   flex-direction: column;

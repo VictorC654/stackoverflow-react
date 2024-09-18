@@ -72,7 +72,7 @@ export default function TopicList() {
           <div className="results-text">
             Results ({filteredTopics.length})
           </div>
-          <Row>
+          <Row className={filteredTopics.length === 1 ? 'single-result-card' : ''}>
             {filteredTopics.map((topic) => (
               <Col key={topic.id} md={12}>
                 <Card className="card mb-3" onClick={handleCardClick}>
