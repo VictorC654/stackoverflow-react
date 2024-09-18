@@ -1,14 +1,14 @@
 // ALL THE COMMENTED LINES ARE FOR BACK END!!!
 
-import axios from "axios";
-
-const api = axios.create({
-    baseURL: 'localhost:44388',
-    timeout: 10000,
-    headers: {
-        'Content-Type': 'application/json',
-    }
-})
+// import axios from "axios";
+//
+// const api = axios.create({
+//     baseURL: 'https://localhost:44388',
+//     timeout: 10000,
+//     headers: {
+//         'Content-Type': 'application/json',
+//     }
+// })
 const getLocalStorage = (key : any) => {
     const storedItem = localStorage.getItem(key);
     return storedItem ? JSON.parse(storedItem) : null;
