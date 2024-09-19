@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Card, Row, Col } from 'react-bootstrap';
 import './topic-details.css';
-import axios from 'axios';
-import user from './user.png';
-import Ellipse from './Ellipse.png';
-import time from './time.png';
+import user from './img/user.png';
+import Ellipse from './img/Ellipse.png';
+import time from './img/time.png';
 
 interface Comment {
   id: number;
