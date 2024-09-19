@@ -6,7 +6,7 @@ import Login from "./pages/login/login";
 import TopicList from "./pages/topics-page/components/topic-list";
 import CreateQuestion from "./pages/create-question/create-question";
 import TopicDetails from "./pages/topic-details/topic-details";
-import TopicNotFound from "./pages/topic-not-found/topic-not-found";
+import NoAnswer from "./pages/no-answer/no-answer";
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import UserProfile from "./pages/userprofile/UserProfile";
