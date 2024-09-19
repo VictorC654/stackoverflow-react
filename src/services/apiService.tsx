@@ -18,8 +18,8 @@ const setLocalStorage = (key : any, data : any) => {
 }
 export const registerUser = async (user : any) => {
     try {
-        const response = await api.post('/register', user);
-        const data = response.data;
+        // const response = await api.post('/register', user);
+        // const data = response.data;
         const currentItems = getLocalStorage('items') || [];
         currentItems.push(user);
         setLocalStorage('items', currentItems);
