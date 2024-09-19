@@ -8,9 +8,10 @@ import CreateQuestion from "./pages/create-question/create-question";
 import TopicDetails from "./pages/topic-details/topic-details";
 import NoAnswer from "./pages/no-answer/no-answer";
 import TopicNotFound from "./pages/topic-not-found/topic-not-found";
+import UserProfile from "./pages/userprofile/UserProfile";
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import UserProfile from "./pages/userprofile/UserProfile";
+
 
 export default function App() {
   return (
