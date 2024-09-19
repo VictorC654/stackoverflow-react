@@ -175,7 +175,7 @@
     font-size: 1.2rem; /* Ajustează dimensiunea textului */
     color: #433D6A;
     margin-top: 5px;
-    text-align: center; /* Centrează textul pe orizontală */
+    text-align: left; /* Centrează textul pe orizontală */
     width: 100%; /* Asigură-te că ocupă întreaga lățime */
 }
 
