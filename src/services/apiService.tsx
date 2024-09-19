@@ -2,13 +2,13 @@
 
 // import axios from "axios";
 //
-// const api = axios.create({
+/*// const api = axios.create({
 //     baseURL: 'https://localhost:44388',
 //     timeout: 10000,
 //     headers: {
 //         'Content-Type': 'application/json',
 //     }
-// })
+// })*/
 const getLocalStorage = (key : any) => {
     const storedItem = localStorage.getItem(key);
     return storedItem ? JSON.parse(storedItem) : null;
@@ -16,6 +16,12 @@ const getLocalStorage = (key : any) => {
 const setLocalStorage = (key : any, data : any) => {
     localStorage.setItem(key, JSON.stringify(data));
 }
+
+// export const getTopics = async () => {
+//     const response = await api.get('/api/Topic');
+//     return response.topics;
+// }
+
 export const registerUser = async (user : any) => {
     try {
         // const response = await api.post('/register', user);
