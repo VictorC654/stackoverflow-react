@@ -6,6 +6,7 @@ const UserProfile: React.FC = () => {
     const navigate = useNavigate();
     const [user, setUser] = useState<any>(null);
     const [loading, setLoading] = useState(true);
+    const [section, setSection] = useState("answers")
     useEffect(() => {
         const fetchUser = async () => {
             try {
@@ -48,62 +49,84 @@ const UserProfile: React.FC = () => {
                                     </div>
                                 </div>
                                 <div className="aqr-container">
-                                    <button className="aqr-progress-button aqr-progress-active">
+                                    <button className={ section === "answers" ? 'aqr-progress-button aqr-progress-active' : 'aqr-progress-button'} onClick={() => setSection('answers')}>
                                         Answers (2)
                                     </button>
-                                    <button className="aqr-progress-button fromLeft">
+                                    <button className={ section === "questions" ? 'aqr-progress-button aqr-progress-active' : 'aqr-progress-button'} onClick={() => setSection('questions')}>
                                         Questions (0)
                                     </button>
-                                    <button className="aqr-progress-button fromLeft">
+                                    <button className={ section === "reputation" ? 'aqr-progress-button aqr-progress-active' : 'aqr-progress-button'} onClick={() => setSection('reputation')}>
                                         Reputation
                                     </button>
                                 </div>
                             </div>
                         </div>
                         <div className="aqr-cards-container">
-                            <div className="answers-card">
-                                <div className="answers-card-user-profile">
-                                    <div className="answers-card-user-pic">
-                                        <i className="fa fa-user" aria-hidden="true"></i>
+                            {section === 'answers' && (
+                                <>
+                                    <div className="answers-card">
+                                        <div className="answers-card-user-profile">
+                                            <div className="answers-card-user-pic">
+                                                <i className="fa fa-user" aria-hidden="true"></i>
+                                            </div>
+                                            <div className="answers-card-user-name">
+                                                Alt user
+                                            </div>
+                                        </div>
+                                        <div className="answers-card-short-desc">
+                                            ai dount anderstand :((
+                                        </div>
+                                        <div className="answers-card-rating">
+                                            <i className="fa-regular fa-star"></i>
+                                            <i className="fa-regular fa-star"></i>
+                                            <i className="fa-regular fa-star"></i>
+                                            <i className="fa-regular fa-star"></i>
+                                            <i className="fa-regular fa-star"></i>
+                                        </div>
                                     </div>
-                                    <div className="answers-card-user-name">
-                                        Alt user
+                                    <div className="answers-card">
+                                        <div className="answers-card-user-profile">
+                                            <div className="answers-card-user-pic">
+                                                <i className="fa fa-user" aria-hidden="true"></i>
+                                            </div>
+                                            <div className="answers-card-user-name">
+                                                Another user
+                                            </div>
+                                        </div>
+                                        <div className="answers-card-short-desc">
+                                            ai anderstand :)
+                                        </div>
+                                        <div className="answers-card-rating">
+                                            <i className="fa-regular fa-star"></i>
+                                            <i className="fa-regular fa-star"></i>
+                                            <i className="fa-regular fa-star"></i>
+                                            <i className="fa-regular fa-star"></i>
+                                            <i className="fa-regular fa-star"></i>
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="answers-card-short-desc">
-                                    ai dount anderstand :((
-                                </div>
-                                <div className="answers-card-rating">
-                                    <i className="fa-regular fa-star"></i>
-                                    <i className="fa-regular fa-star"></i>
-                                    <i className="fa-regular fa-star"></i>
-                                    <i className="fa-regular fa-star"></i>
-                                    <i className="fa-regular fa-star"></i>
-                                </div>
-                            </div>
-                            <div className="answers-card">
-                                <div className="answers-card-user-profile">
-                                    <div className="answers-card-user-pic">
-                                        <i className="fa fa-user" aria-hidden="true"></i>
+                                    <div className="aqr-read-more">
+                                        Read more
                                     </div>
-                                    <div className="answers-card-user-name">
-                                        Another user
+                                </>
+                            )}
+                            {section === 'questions' && (
+                                <>
+                                    <div className="questions-card">
+                                        <div className="questions-card-title">
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                        </div>
+                                        <div className="questions-card-short-desc">
+                                            Duis in odio vel tortor ullamcorper placerat. Aliquam erat volutpat. Suspendisse id tortor eget nulla congue pretium rhoncus quis odio.
+                                        </div>
+                                        <div className="answers-card-answers-number">
+                                            10 answers
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="answers-card-short-desc">
-                                    ai anderstand :)
-                                </div>
-                                <div className="answers-card-rating">
-                                    <i className="fa-regular fa-star"></i>
-                                    <i className="fa-regular fa-star"></i>
-                                    <i className="fa-regular fa-star"></i>
-                                    <i className="fa-regular fa-star"></i>
-                                    <i className="fa-regular fa-star"></i>
-                                </div>
-                            </div>
-                            <div className="aqr-read-more">
-                                Read more
-                            </div>
+                                    <div className="aqr-read-more">
+                                        Read more
+                                    </div>
+                                </>
+                            )}
                         </div>
                     </div>
                 </div>
