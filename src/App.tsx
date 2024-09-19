@@ -7,7 +7,6 @@ import TopicList from "./pages/topics-page/components/topic-list";
 import CreateQuestion from "./pages/create-question/create-question";
 import TopicDetails from "./pages/topic-details/topic-details";
 import NoAnswer from "./pages/no-answer/no-answer";
-import TopicNotFound from "./pages/topic-not-found/topic-not-found";
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import UserProfile from "./pages/userprofile/UserProfile";
@@ -23,7 +22,7 @@ export default function App() {
           <Route path="create-question" element={<CreateQuestion />} />
           <Route path="topics" element={<TopicList />} />
           <Route path="topic-details" element={<TopicDetails />} />
-          <Route path="no-answer" element={<NoAnswer />} />
+          <Route path="/topic-details/:id" element={<TopicDetails />} />
           <Route path="/notfound" element={<TopicNotFound />} />
           <Route path="/profile" element={<UserProfile />} />
         </Routes>
