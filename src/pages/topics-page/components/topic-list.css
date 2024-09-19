@@ -1,8 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
 
-.topic-list-page .base-background {
+.topic-list-page,
+.topic-not-found-container {
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
+}
+
+.topic-list-page .base-background {
   align-items: center;
   justify-content: center;
   background-color: #ebe9f8;
@@ -154,17 +159,17 @@
 .topic-not-found-container .ask-button {
   background-color: #9387DC;
   border: none;
-  padding: 10px 30px; 
+  padding: 10px 30px;
   border-radius: 10px;
   font-family: 'Montserrat', sans-serif;
   color: #FFFFFF;
   font-weight: 800;
   font-size: 20px;
   margin-bottom: 45px;
-  transition: background-color 0.3s ease, transform 0.3s ease; 
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .topic-not-found-container .ask-button:hover {
-  background-color: #7f66c1; 
-  transform: scale(1.05); 
+  background-color: #7f66c1;
+  transform: scale(1.05);
 }
