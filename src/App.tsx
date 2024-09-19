@@ -6,8 +6,11 @@ import Login from "./pages/login/login";
 import TopicList from "./pages/topics-page/components/topic-list";
 import CreateQuestion from "./pages/create-question/create-question";
 import TopicDetails from "./pages/topic-details/topic-details";
-import {BrowserRouter as Router, Navigate, Route, Routes, useNavigate} from "react-router-dom";
 import UserProfile from "./pages/userprofile/UserProfile";
+
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+
+
 export default function App() {
   return (
     <Router>
