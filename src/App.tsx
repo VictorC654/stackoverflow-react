@@ -8,7 +8,7 @@ import CreateQuestion from "./pages/create-question/create-question";
 import TopicDetails from "./pages/topic-details/topic-details";
 import UserProfile from "./pages/userprofile/UserProfile";
 
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 
 
 export default function App() {
@@ -16,6 +16,7 @@ export default function App() {
     <Router>
       <Layout>
         <Routes>
+          <Route path="/" element={<Navigate to="/home" replace={true} />} />
           <Route path="home" element={<Home />} />
           <Route path="register" element={<Register />} />
           <Route path="login" element={<Login />} />
