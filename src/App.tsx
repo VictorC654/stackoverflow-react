@@ -6,14 +6,14 @@ import Login from "./pages/login/login";
 import TopicList from "./pages/topics-page/components/topic-list";
 import CreateQuestion from "./pages/create-question/create-question";
 import TopicDetails from "./pages/topic-details/topic-details";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {BrowserRouter as Router, Navigate, Route, Routes, useNavigate} from "react-router-dom";
 import UserProfile from "./pages/userprofile/UserProfile";
-
 export default function App() {
   return (
     <Router>
       <Layout>
         <Routes>
+          <Route path="/" element={<Navigate to="/home" replace={true} />} />
           <Route path="home" element={<Home />} />
           <Route path="register" element={<Register />} />
           <Route path="login" element={<Login />} />

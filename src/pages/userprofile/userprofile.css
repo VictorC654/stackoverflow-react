@@ -147,4 +147,37 @@
 {
     cursor:pointer;
 }
+.questions-card
+{
+    background:white;
+    margin-bottom:10px;
+    width:994px;
+    padding:25px;
+    box-shadow: 0px 8px 32px -8px #0C0C0D66;
+    border-radius:15px;
+    height:172px;
+}
+.questions-card-title
+{
+    margin-top:7px;
+    font-size:20px;
+    font-weight:bold;
+}
+.questions-card-short-desc
+{
+    margin-top:20px;
+    font-size:18px;
+}
+.answers-card-answers-number
+{
+    background-color:#C1BAEF;
+    width:119px;
+    font-size:18px;
+    justify-content: center;
+    border-radius:10px;
+    padding:5px;
+    margin-top:-10px;
+    display:flex;
+    margin-left:auto;
+}
 
