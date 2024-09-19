@@ -180,4 +180,45 @@
     display:flex;
     margin-left:auto;
 }
+.action-buttons
+{
+    display: flex;
+    justify-content: flex-end;
+}
+.edit-profile-button
+{
+    padding:8px;
+    background:#C1BAEF;
+    border-radius:20px;
+    font-weight:bold;
+    font-size:16px;
+    width:125px;
+    outline:none;
+    border:none;
+}
+.edit-profile-button:hover
+{
+    background-color: #afa6e9;
+    color: black;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.342);
+}
+.logout-profile-button:hover
+{
+    background-color: #afa6e9;
+    color: black;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.342);
+}
+.logout-profile-button
+{
+    margin-left:5px;
+    padding:8px;
+    color:white;
+    background:#9387DC;
+    border-radius:20px;
+    font-weight:bold;
+    font-size:16px;
+    width:125px;
+    outline:none;
+    border:none;
+}
 

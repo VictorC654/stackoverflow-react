@@ -2,11 +2,16 @@ import React, {useEffect, useState} from "react";
 import './userprofile.css'
 import {getCurrentUser} from "../../services/apiService";
 import {useNavigate} from "react-router-dom";
+import {logoutUser} from "../../services/apiService";
 const UserProfile: React.FC = () => {
     const navigate = useNavigate();
     const [user, setUser] = useState<any>(null);
     const [loading, setLoading] = useState(true);
-    const [section, setSection] = useState("answers")
+    const [section, setSection] = useState("answers");
+    const logout = () => {
+        logoutUser();
+        navigate("/home");
+    }
     useEffect(() => {
         const fetchUser = async () => {
             try {
@@ -26,6 +31,14 @@ const UserProfile: React.FC = () => {
             return (
                 <div className="user-profile-container-center">
                     <div className="user-profile-container">
+                        <div className="action-buttons">
+                            <button className="edit-profile-button">
+                                Edit profile
+                            </button>
+                            <button className="logout-profile-button" onClick={logout}>
+                                Logout
+                            </button>
+                        </div>
                         <div className="user-profile-top-container">
                             <div className="user-profile-pic">
                                 <i className="fa fa-user" aria-hidden="true"></i>

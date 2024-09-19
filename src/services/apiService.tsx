@@ -1,14 +1,13 @@
 // ALL THE COMMENTED LINES ARE FOR BACK END!!!
-
-// import axios from "axios";
+// import axios, {AxiosResponse} from "axios";
 //
-/*// const api = axios.create({
-//     baseURL: 'https://localhost:44388',
-//     timeout: 10000,
-//     headers: {
+// const api = axios.create({
+//      baseURL: 'https://localhost:44388',
+//      timeout: 10000,
+//        headers: {
 //         'Content-Type': 'application/json',
 //     }
-// })*/
+// })
 const getLocalStorage = (key : any) => {
     const storedItem = localStorage.getItem(key);
     return storedItem ? JSON.parse(storedItem) : null;
@@ -17,9 +16,16 @@ const setLocalStorage = (key : any, data : any) => {
     localStorage.setItem(key, JSON.stringify(data));
 }
 
-// export const getTopics = async () => {
-//     const response = await api.get('/api/Topic');
-//     return response.topics;
+export const logoutUser = () => {
+    localStorage.removeItem("currentUser");
+}
+
+// export const getTopics = async ()  => {
+//      await api.get('/api/Topic').then(
+//         (response: AxiosResponse) => {
+//             return response.data;
+//         }
+//     );
 // }
 
 export const registerUser = async (user : any) => {
@@ -42,8 +48,11 @@ export const registerUser = async (user : any) => {
 export const loginUser = async(userData : any) => {
     const localStorage = getLocalStorage("items");
     try {
-        // const response = await api.post('/api/Users/Login', userData);
-        // const data = response.data;
+    //     await api.post('/api/Users/Login', userData).then(
+    //         (response: AxiosResponse) => {
+    //             setLocalStorage("jwttoken", response.data);
+    //         }
+    //     );
         let user = localStorage.find((user: { email: any; }) => user.email === userData.email);
         if(user.password === userData.password)
         {
