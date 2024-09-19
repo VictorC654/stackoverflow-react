@@ -22,7 +22,8 @@ export default function App() {
           <Route path="create-question" element={<CreateQuestion />} />
           <Route path="topics" element={<TopicList />} />
           <Route path="topic-details" element={<TopicDetails />} />
-          <Route path="no-answer" element={<NoAnswer />} />
+          <Route path="/topic-details/:id" element={<TopicDetails />} />
+          <Route path="/notfound" element={<TopicNotFound />} />
           <Route path="/profile" element={<UserProfile />} />
         </Routes>
       </Layout>

@@ -3,7 +3,7 @@
 // import axios from "axios";
 //
 // const api = axios.create({
-//     baseURL: 'localhost:5000',
+//     baseURL: 'https://localhost:44388',
 //     timeout: 10000,
 //     headers: {
 //         'Content-Type': 'application/json',
@@ -18,10 +18,8 @@ const setLocalStorage = (key : any, data : any) => {
 }
 export const registerUser = async (user : any) => {
     try {
-        // FOR BACK END ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        // const response = await api.post('/register', user);
-        // const data = response.data;
-        // FOR BACK END ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        const response = await api.post('/register', user);
+        const data = response.data;
         const currentItems = getLocalStorage('items') || [];
         currentItems.push(user);
         setLocalStorage('items', currentItems);
@@ -38,7 +36,7 @@ export const registerUser = async (user : any) => {
 export const loginUser = async(userData : any) => {
     const localStorage = getLocalStorage("items");
     try {
-        // const response = await api.post('/login', userData);
+        // const response = await api.post('/api/Users/Login', userData);
         // const data = response.data;
         let user = localStorage.find((user: { email: any; }) => user.email === userData.email);
         if(user.password === userData.password)
