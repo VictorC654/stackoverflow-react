@@ -3,7 +3,22 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
+import axios from 'axios';
+ 
+const getLocalStorage = (key) => {
+  const storedItem = localStorage.getItem(key);
+  return storedItem ? JSON.parse(storedItem) : null;
+}
+axios.interceptors.request.use(function (config) {
+  console.log(config);
+  if(!config?.headers)
+  {
+      return config;
+  }
+  const token = getLocalStorage("jwttoken");
+  config.headers.Authorization =  token;
+  return config;
+});
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>

@@ -1,13 +1,10 @@
 // ALL THE COMMENTED LINES ARE FOR BACK END!!!
-// import axios, {AxiosResponse} from "axios";
-//
-// const api = axios.create({
-//      baseURL: 'https://localhost:44388',
-//      timeout: 10000,
-//        headers: {
-//         'Content-Type': 'application/json',
-//     }
-// })
+import axios, {AxiosResponse} from "axios";
+import { Topic } from "pages/topics-page/models/topicModel";
+import { createAxiosClient } from "./client";
+
+
+const api = createAxiosClient(); 
 const getLocalStorage = (key : any) => {
     const storedItem = localStorage.getItem(key);
     return storedItem ? JSON.parse(storedItem) : null;
@@ -20,13 +17,14 @@ export const logoutUser = () => {
     localStorage.removeItem("currentUser");
 }
 
-// export const getTopics = async ()  => {
-//      await api.get('/api/Topic').then(
-//         (response: AxiosResponse) => {
-//             return response.data;
-//         }
-//     );
-// }
+ export const getTopics = async () : Promise<Topic[]>  => {  
+     return await api.get('/api/Topic').then(
+         (response: AxiosResponse) => {
+            console.log(response.data);
+             return response.data;
+         }
+     );
+ }
 
 export const registerUser = async (user : any) => {
     try {
@@ -48,19 +46,19 @@ export const registerUser = async (user : any) => {
 export const loginUser = async(userData : any) => {
     const localStorage = getLocalStorage("items");
     try {
-    //     await api.post('/api/Users/Login', userData).then(
-    //         (response: AxiosResponse) => {
-    //             setLocalStorage("jwttoken", response.data);
-    //         }
-    //     );
-        let user = localStorage.find((user: { email: any; }) => user.email === userData.email);
-        if(user.password === userData.password)
-        {
-            const currentUser = getLocalStorage('currentUser') || [];
-            currentUser.push('currentUser', JSON.stringify(user));
-            setLocalStorage('currentUser', currentUser);
-            console.log("Logged in");
-        }
+             await api.post('/api/Auth/login', userData).then(
+                 (response: AxiosResponse) => {
+                 setLocalStorage("jwttoken", response.data);
+             }
+         );
+        // let user = localStorage.find((user: { email: any; }) => user.email === userData.email);
+        // if(user.password === userData.password)
+        // {
+        //     const currentUser = getLocalStorage('currentUser') || [];
+        //     currentUser.push('currentUser', JSON.stringify(user));
+        //     setLocalStorage('currentUser', currentUser);
+        //     console.log("Logged in");
+        // }
     } catch (error)
     {
         console.log(error);

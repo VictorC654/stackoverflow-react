@@ -5,6 +5,7 @@ import './topic-list.css';
 import { Topic } from '../models/topicModel';
 import { fetchMockData } from '../services/topicFetch';
 import loupeImage from './img/loupe.png';
+import { getTopics } from "services/apiService";
 
 const TOPIC_COUNT = 15;
 const TOTAL_TOPICS = 45;
@@ -34,20 +35,25 @@ export default function TopicList() {
   
 
   useEffect(() => {
-    const fetchInitialTopics = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const initialTopics = await fetchMockData(0, TOTAL_TOPICS); 
-        setTopics(initialTopics);
-      } catch (err) {
-        setError('Failed to fetch topics :(');
-      } finally {
-        setLoading(false);
-      }
-    };
+    // const fetchInitialTopics = async () => {
+    //   setLoading(true);
+    //   setError(null);
+    //   try {
+    //     const initialTopics = await fetchMockData(0, TOTAL_TOPICS); 
+    //     setTopics(initialTopics);
+    //   } catch (err) {
+    //     setError('Failed to fetch topics :(');
+    //   } finally {
+    //     setLoading(false);
+    //   }
+    // };
 
-    fetchInitialTopics();
+    // fetchInitialTopics();
+    const fetchTopics = async () => {
+      let fetchedTopics = await getTopics();
+      setTopics(fetchedTopics);
+    }
+    fetchTopics();
   }, []);
 
   useEffect(() => {
@@ -61,7 +67,7 @@ export default function TopicList() {
       setTotalFilteredTopics(TOTAL_TOPICS); 
     }
   }, [searchTerm, topics]);
-
+  console.log(filteredTopics);
   const visibleFilteredTopics = filteredTopics.slice(0, visibleTopics);
 
   const handleCardClick = () => {
@@ -97,14 +103,14 @@ export default function TopicList() {
       ) : null}
 
       {/* Results section */}
-      {filteredTopics.length !== 0 && (
+      {topics.length !== 0 && (
         <div className="topic-list-page">
           <div className="base-background">
             <div className="card-container">
               <div className="results-text">
                 Results  ({totalFilteredTopics}) 
               </div>
-              <Row className={filteredTopics.length === 1 ? 'single-result-card' : ''}>
+              <Row className={topics.length === 1 ? 'single-result-card' : ''}>
                 {visibleFilteredTopics.map((topic) => (
                   <Col key={topic.id} md={12}>
                     <Card className="card mb-3" onClick={handleCardClick}>
