@@ -33,7 +33,7 @@ export default function Header() {
           <div className="btn-custom">
             {checkIfUserLoggedIn("currentUser") ? (
               <>
-                <Link to="/home" className="btn-question">
+                <Link to="/create-question" className="btn-question">
                   Ask Question
                 </Link>
                 <Link to="/profile" className="btn-profile">

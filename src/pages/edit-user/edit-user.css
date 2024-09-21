@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+.edit-form-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Montserrat', sans-serif;
+    padding: 100px;
+}
+
+.edit-form {
+    background-color: #FFFFFF80;
+    padding: 20px;
+    border-radius: 60px;
+    box-shadow: 0px 16px 32px -8px #0C0C0D66;
+    width: 1094px;
+    height: 550px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-left: 200px;
+    padding-right: 200px;
+}
+
+.profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.profile-user {
+    margin-top: -40px;
+    font-size: 40px;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #D7D3F1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.save-button {
+    width: 222px;
+    height: 40px;
+    padding: 10px 20px;
+    font-size: 13px;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+    background-color: white;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+
+.profile-button {
+    padding:8px;
+    background:#C1BAEF;
+    border-radius:20px;
+    font-weight:600;
+    font-size:16px;
+    width:125px;
+    outline:none;
+    border:none;
+    margin-left: 800px;
+}
+
+.profile-button:hover {
+    background-color: #afa6e9;
+    color: black;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.342);
+}
+
+.profile-button:active {
+    background-color: #c9b1e5 !important;
+    color: white;
+}
+
+.change-picture-button:hover,
+.save-button:hover {
+    background-color: #D7D3F1;
+    color: black;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.342);
+}
+
+.conteiner-input {
+    margin-bottom: 10px;
+    width: 751px;
+}
+
+.conteiner-input h2 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    margin-top: 10px;
+    display: block;
+    margin-left: 10px;
+    border-radius: 10px;
+}
+
+.conteiner-input input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
