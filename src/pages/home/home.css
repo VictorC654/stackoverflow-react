@@ -234,17 +234,17 @@
   position: relative;
 }
 
-.com-section::before {
+/* .com-section::before {
   content: "";
   position: absolute;
   top: 0;
   left: -20px;
-  width: 120%;
+  width: 100%;
   height: 104.5%;
   background: linear-gradient(#ffffff00, #D7D3F1);
   z-index: 2;
   pointer-events: none;
-}
+} */
 
 .com-box1,
 .com-box2,
