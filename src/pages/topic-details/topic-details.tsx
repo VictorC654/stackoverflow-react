@@ -5,14 +5,7 @@ import './topic-details.css';
 import user from './img/user.png';
 import Ellipse from './img/Ellipse.png';
 import time from './img/time.png';
-
-interface Comment {
-  id: number;
-  username: string;
-  comment: string;
-  date: string;
-  rating: number;
-}
+import { Comment } from './models/detailsModels'; 
 
 const predefinedComments = [
   'Aceasta este o opinie interesantă!',
@@ -22,7 +15,6 @@ const predefinedComments = [
   'Ar fi interesant să aud mai multe detalii.'
 ];
 
-// Funcție pentru preluarea comentariilor din localStorage sau din backend
 const fetchComments = (id: string | undefined): Comment[] => {
   const allComments = JSON.parse(localStorage.getItem('details-comments') || '{}');
   if (id && allComments[id]) {
@@ -33,7 +25,6 @@ const fetchComments = (id: string | undefined): Comment[] => {
   return [];
 };
 
-// Funcție pentru salvarea comentariilor în localStorage
 const saveCommentsToLocalStorage = (id: string | undefined, comments: Comment[]) => {
   const allComments = JSON.parse(localStorage.getItem('details-comments') || '{}');
   if (id) {
@@ -44,13 +35,23 @@ const saveCommentsToLocalStorage = (id: string | undefined, comments: Comment[])
   localStorage.setItem('details-comments', JSON.stringify(allComments));
 };
 
-// Funcție pentru ștergerea comentariilor la prima rulare a aplicației
 const clearCommentsOnStartup = () => {
   const isFirstRun = !sessionStorage.getItem('sessionInitialized');
   if (isFirstRun) {
     localStorage.removeItem('details-comments');
     sessionStorage.setItem('sessionInitialized', 'true');
   }
+};
+
+// Funcție pentru generarea comentariilor dinamice
+const generatePredefinedComments = () => {
+  return predefinedComments.map((text, index) => ({
+    id: index + 1, 
+    username: 'Alt user',
+    comment: text,
+    date: new Date().toLocaleDateString('ro-RO'),
+    rating: 0 
+  }));
 };
 
 const TopicDetails = () => {
@@ -64,10 +65,9 @@ const TopicDetails = () => {
 
     const fetchedComments = fetchComments(id);
     if (fetchedComments.length === 0 && !id) {
-      // Generăm comentarii dinamice dacă nu există în localStorage
       const dynamicComments = generatePredefinedComments();
       setComments(dynamicComments);
-      saveCommentsToLocalStorage(undefined, dynamicComments); // Salvăm comentariile dinamice
+      saveCommentsToLocalStorage(undefined, dynamicComments); 
     } else {
       setComments(fetchedComments);
     }
@@ -86,17 +86,6 @@ const TopicDetails = () => {
     };
   }, [id]);
 
-// Funcție pentru generarea comentariilor dinamice
-const generatePredefinedComments = () => {
-  return predefinedComments.map((text, index) => ({
-    id: comments.length + index + 1, // ID unic pentru fiecare comentariu generat
-    username: 'Alt user',
-    comment: text,
-    date: new Date().toLocaleDateString('ro-RO'),
-    rating: 5 // Setăm rating-ul implicit la 5 stele pentru toate comentariile
-  }));
-};
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewMessage(e.target.value);
   };
@@ -108,7 +97,7 @@ const generatePredefinedComments = () => {
         username: 'Alt user',
         comment: newMessage,
         date: new Date().toLocaleDateString('ro-RO'),
-        rating: 0, // Setăm rating-ul implicit la 5 stele
+        rating: 0, 
       };
   
       const updatedComments = [newComment, ...comments];
