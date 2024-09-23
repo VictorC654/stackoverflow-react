@@ -43,28 +43,24 @@ export const registerUser = async (user : any) => {
         throw e;
     }
 }
-export const loginUser = async(userData : any) => {
-    const localStorage = getLocalStorage("items");
+export const loginUser = async (userData: { email: string; password: string }) => {
     try {
-             await api.post('/api/Auth/login', userData).then(
-                 (response: AxiosResponse) => {
-                 setLocalStorage("jwttoken", response.data);
-             }
-         );
-        // let user = localStorage.find((user: { email: any; }) => user.email === userData.email);
-        // if(user.password === userData.password)
-        // {
-        //     const currentUser = getLocalStorage('currentUser') || [];
-        //     currentUser.push('currentUser', JSON.stringify(user));
-        //     setLocalStorage('currentUser', currentUser);
-        //     console.log("Logged in");
-        // }
-    } catch (error)
-    {
+        const response = await api.post("/api/Auth/login", userData);
+        const { token, user } = response.data;
+
+        if (localStorage.getItem("jwttoken")) {
+            localStorage.removeItem("jwttoken");
+        }
+
+        setLocalStorage("jwttoken", token);
+        setLocalStorage("currentUser", user);
+
+        console.log("Logged in successfully");
+    } catch (error) {
         console.log(error);
         throw error;
     }
-}
+};
 export const checkIfUserLoggedIn  = (key : any) => {
     return !!localStorage.getItem("currentUser");
 }
