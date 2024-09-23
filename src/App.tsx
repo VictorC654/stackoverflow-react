@@ -7,7 +7,7 @@ import TopicList from "./pages/topics-page/components/topic-list";
 import CreateQuestion from "./pages/create-question/create-question";
 import TopicDetails from "./pages/topic-details/topic-details";
 import UserProfile from "./pages/userprofile/UserProfile";
-
+import UserEdit from "./pages/edit-user/edit-user";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 
 
@@ -25,6 +25,7 @@ export default function App() {
           <Route path="topic-details" element={<TopicDetails />} />
           <Route path="/topic-details/:id" element={<TopicDetails />} />
           <Route path="/profile" element={<UserProfile />} />
+          <Route path="/edit" element={<UserEdit />} />
         </Routes>
       </Layout>
     </Router>
