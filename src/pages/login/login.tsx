@@ -33,13 +33,13 @@ const LoginForm: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            let userData = { email, password};
-            await loginUser(userData);
-            navigate('/home');
-        } catch (e) {
-            console.log(e);
+          const userData = { email, password }; 
+          await loginUser(userData);
+          navigate("/home"); 
+        } catch (error) {
+          console.error("Login failed:", error);
         }
-    };
+      };
     return (
         <div className="form-center">
             <form onSubmit={handleSubmit}>
