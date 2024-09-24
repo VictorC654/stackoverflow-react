@@ -100,84 +100,90 @@ const RegisterForm: React.FC = () => {
   };
 
   return (
-    <div className="center-form">
-      <form onSubmit={handleSubmit} className="register-form">
-        <h2>Sign Up</h2>
-        <div className="input-container">
-          <img src={emailIcon} alt="Email Icon" />
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-              setTouched((prev) => ({ ...prev, email: true }));
-            }}
-            required
-            placeholder="Email"
-          />
-          {emailError && <p className="error">{emailError}</p>}
-        </div>
-
-        <div className="input-container">
-          <img src={nameIcon} alt="Name Icon" />
-          <input
-            type="text"
-            value={fullName}
-            onChange={(e) => {
-              setFullName(e.target.value);
-              setTouched((prev) => ({ ...prev, fullName: true }));
-            }}
-            required
-            placeholder="Full name"
-          />
-          {nameError && <p className="error">{nameError}</p>}
-        </div>
-
-        <div className="input-container" style={{ position: "relative" }}>
-          <img src={passwordIcon} alt="Password Icon" />
-          <input
-            type={showPassword ? "text" : "password"}
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-              setTouched((prev) => ({ ...prev, password: true }));
-            }}
-            required
-            placeholder="Password"
-          />
-          <img
-            src={showPassword ? showPasswordIcon : hidePasswordIcon}
-            alt={showPassword ? "Hide password" : "Show password"}
-            onClick={toggleShowPassword}
-            className="show-hide-password"
-          />
-          {passwordError && <p className="error">{passwordError}</p>}
-        </div>
-
-        <div className="input-container">
-          <img src={jobIcon} alt="Job Icon" />
-          <select
-            value={jobTitle}
-            onChange={(e) => setJobTitle(e.target.value)}
-            required
+    <div className="register-conteiner">
+      <div className="center-form">
+        <form onSubmit={handleSubmit} className="register-form">
+          <h2>Sign Up</h2>
+          <div
+            className={`input-container ${emailError ? "error-visible" : ""}`}
           >
-            <option value="">Select your job title</option>
-            {jobOptions.map((job) => (
-              <option key={job} value={job}>
-                {job}
-              </option>
-            ))}
-          </select>
-        </div>
+            <img src={emailIcon} alt="Email Icon" />
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setTouched((prev) => ({ ...prev, email: true }));
+              }}
+              required
+              placeholder="Email"
+            />
+            {emailError && <p className="error">{emailError}</p>}
+          </div>
 
-        <button
-          type="submit"
-          disabled={!isFormValid}
-          className={isFormValid ? "btn-active" : "btn-inactive"}
-        >
-          Sign Up
-        </button>
-      </form>
+          <div className="input-container">
+            <img src={nameIcon} alt="Name Icon" />
+            <input
+              type="text"
+              value={fullName}
+              onChange={(e) => {
+                setFullName(e.target.value);
+                setTouched((prev) => ({ ...prev, fullName: true }));
+              }}
+              required
+              placeholder="Full name"
+            />
+            {nameError && <p className="error">{nameError}</p>}
+          </div>
+
+          <div
+            className={`input-container ${
+              passwordError ? "error-visible" : ""
+            }`}
+          >
+            <img src={passwordIcon} alt="Password Icon" />
+            <input
+              type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setTouched((prev) => ({ ...prev, password: true }));
+              }}
+              required
+              placeholder="Password"
+            />
+            <img
+              src={showPassword ? showPasswordIcon : hidePasswordIcon}
+              alt={showPassword ? "Hide password" : "Show password"}
+              onClick={toggleShowPassword}
+              className="show-hide-password"
+            />
+            {passwordError && <p className="error">{passwordError}</p>}
+          </div>
+
+          <div className="input-container">
+            <img src={jobIcon} alt="Job Icon" />
+            <select
+              value={jobTitle}
+              onChange={(e) => setJobTitle(e.target.value)}
+              required
+            >
+              <option value="">Select your job title</option>
+              {jobOptions.map((job) => (
+                <option key={job} value={job}>
+                  {job}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <button
+            type="submit"
+          >
+            Sign Up
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
