@@ -3,16 +3,14 @@ import React, { useState, useEffect } from 'react';
 import { Card, Row, Col, Spinner } from 'react-bootstrap';
 import './topic-list.css';
 import { Topic } from '../models/topicModel';
-import { fetchMockData } from '../services/topicFetch';
 import loupeImage from './img/loupe.png';
 import { getTopics } from "services/apiService";
 
-const TOPIC_COUNT = 15;
-const TOTAL_TOPICS = 45;
+const TOPIC_DISPLAY = 15;
 
 export default function TopicList() {
   const [topics, setTopics] = useState<Topic[]>([]); 
-  const [visibleTopics, setVisibleTopics] = useState(TOPIC_COUNT);
+  const [visibleTopics, setVisibleTopics] = useState(TOPIC_DISPLAY); 
   const [loading, setLoading] = useState(true);
   const [filteredTopics, setFilteredTopics] = useState<Topic[]>([]); 
   const [totalFilteredTopics, setTotalFilteredTopics] = useState(0); 
@@ -28,31 +26,25 @@ export default function TopicList() {
     setLoadingMore(true);
     
     setTimeout(() => {
-      setVisibleTopics((prevVisibleTopics) => prevVisibleTopics + TOPIC_COUNT);
+      setVisibleTopics((prevVisibleTopics) => prevVisibleTopics + TOPIC_DISPLAY); 
       setLoadingMore(false);
     }, 500); 
   };
   
-
   useEffect(() => {
-    // const fetchInitialTopics = async () => {
-    //   setLoading(true);
-    //   setError(null);
-    //   try {
-    //     const initialTopics = await fetchMockData(0, TOTAL_TOPICS); 
-    //     setTopics(initialTopics);
-    //   } catch (err) {
-    //     setError('Failed to fetch topics :(');
-    //   } finally {
-    //     setLoading(false);
-    //   }
-    // };
-
-    // fetchInitialTopics();
     const fetchTopics = async () => {
-      let fetchedTopics = await getTopics();
-      setTopics(fetchedTopics);
-    }
+      try {
+        const fetchedTopics = await getTopics();
+        setTopics(fetchedTopics);
+        setFilteredTopics(fetchedTopics); 
+        setTotalFilteredTopics(fetchedTopics.length); 
+      } catch (err) {
+        setError("Failed to fetch topics.");
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
     fetchTopics();
   }, []);
 
@@ -64,10 +56,10 @@ export default function TopicList() {
       setTotalFilteredTopics(filtered.length); 
     } else {
       setFilteredTopics(topics); 
-      setTotalFilteredTopics(TOTAL_TOPICS); 
+      setTotalFilteredTopics(topics.length); 
     }
   }, [searchTerm, topics]);
-  console.log(filteredTopics);
+
   const visibleFilteredTopics = filteredTopics.slice(0, visibleTopics);
 
   const handleCardClick = () => {
@@ -78,13 +70,15 @@ export default function TopicList() {
     navigate('/create-question');
   };
 
+  const truncateDescription = (description: string, wordLimit: number) => {
+    const words = description.split(' ');
+    if (words.length <= wordLimit) return description;
+    return `${words.slice(0, wordLimit).join(' ')}...`;
+  };
+
   return (
     <>
-      {loading ? (
-        <div className="spinner-container">
-          <Spinner animation="border" variant="dark" />
-        </div>
-      ) : filteredTopics.length === 0 ? (
+      {filteredTopics.length === 0 ? (
         // No results found section
         <div className="topic-not-found-container">
           <Card className="card">
@@ -108,7 +102,7 @@ export default function TopicList() {
           <div className="base-background">
             <div className="card-container">
               <div className="results-text">
-                Results  ({totalFilteredTopics}) 
+                Results ({totalFilteredTopics}) 
               </div>
               <Row className={topics.length === 1 ? 'single-result-card' : ''}>
                 {visibleFilteredTopics.map((topic) => (
@@ -116,7 +110,9 @@ export default function TopicList() {
                     <Card className="card mb-3" onClick={handleCardClick}>
                       <Card.Body>
                         <Card.Title className="card-title">{topic.title}</Card.Title>
-                        <Card.Text className="card-description">{topic.description}</Card.Text>
+                        <Card.Text className="card-description">
+                        {truncateDescription(topic.description, 50)} 
+                        </Card.Text>
                         <button className="answer-button">{topic.answers} Answers</button>
                       </Card.Body>
                     </Card>
