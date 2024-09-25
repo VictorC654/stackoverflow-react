@@ -5,3 +5,12 @@ export interface Comment {
   date: string;
   rating: number;
 }
+
+export interface Topic {
+  id: string;
+  title: string;
+  details: string;
+  subject: string;
+  createdBy: string;
+  createdDate: string;
+}
