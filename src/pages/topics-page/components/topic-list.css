@@ -146,6 +146,62 @@
   border-width: 0.4em;
 }
 
+.topic-list-page .both-dropdowns {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px; 
+}
+
+
+.topic-list-page .dropdown-container {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.topic-list-page .dropdown-container .dropdown-toggle {
+  background-color: #C1BAEF;
+  color: #433D6A;
+  border: none;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.topic-list-page .dropdown-container .dropdown-toggle:hover {
+  background-color: #A89CDF;
+  transform: scale(1.05);
+}
+
+.topic-list-page .dropdown-container .dropdown-menu {
+  background-color: #E4E0FF;
+  border-radius: 10px;
+  padding: 10px 0;
+  box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.topic-list-page .dropdown-container .dropdown-item {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: #433D6A;
+  padding: 10px 20px;
+  transition: background-color 0.3s ease;
+}
+
+.topic-list-page .dropdown-container .dropdown-item:hover {
+  background-color: #CBC5EE;
+  color: #FFFFFF;
+}
+
+.topic-list-page .dropdown-container .dropdown-item:active {
+  background-color: #A89CDF;
+  color: #FFFFFF;
+}
+
 /* Not found section styles */
 .topic-not-found-container .card {
   width: 1094px;
