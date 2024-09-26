@@ -6,10 +6,11 @@ export const fetchMockData = (offset: number, limit: number): Promise<Topic[]> =
       id: index + 1,
       title: `Topic Title ${index + 1}`,
       description: `This is the question description :)`,
-      answers: Math.floor(Math.random() * 100),
+      tags: [`tag${index + 1}`, 'general'], 
+      datecreate: Date.now() - (index * 1000000)  
     }));
 
-    // Simulate a network request
+    // Simulăm o cerere de rețea
     setTimeout(() => {
       try {
         resolve(mock_data.slice(offset, offset + limit));

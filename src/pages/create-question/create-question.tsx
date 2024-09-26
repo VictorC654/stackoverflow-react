@@ -53,9 +53,11 @@ const CreateQuestion: React.FC = () => {
 
         console.log('Sending mock data to API:', mockData);
 
+        const generatedId = Date.now(); 
+
         setTimeout(() => {
-            navigate('/topic-details');
-        }, 1000);
+            navigate(`/topic-details/${generatedId}?isNew=true`); 
+        }, 1000);        
     };
 
     return (
