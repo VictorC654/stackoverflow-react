@@ -28,11 +28,11 @@ export const logoutUser = () => {
 
 export const registerUser = async (user : any) => {
     try {
-        // const response = await api.post('/register', user);
-        // const data = response.data;
-        const currentItems = getLocalStorage('items') || [];
-        currentItems.push(user);
-        setLocalStorage('items', currentItems);
+        const response = await api.post('/api/Auth/register', user);
+        const data = response.data;
+        // const currentItems = getLocalStorage('items') || [];
+        // currentItems.push(user);
+        setLocalStorage('items', data);
         console.log("SUCCESS");
         // FOR BACK END ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         // return data;
@@ -84,3 +84,21 @@ export const getUser = async (userEmail : any) => {
         throw error;
     }
 }
+
+
+export const createQuestion = async (question: { title: string; description: string; tags: string[]; userId: number }) => {
+    try {
+        // POST request către endpoint-ul API care gestionează întrebările
+        const response = await api.post('/api/Topic', question); // Endpoint-ul trebuie să fie corect definit în backend
+        console.log("Question created successfully:", response.data);
+        return response;
+    } catch (error) {
+        console.error('Error creating question:', error);
+        throw error;
+    }
+};
+
+export const getQuestionDetails = async (questionId: string) => {
+    const response = await api.get(`/api/Topic/${questionId}`); // Modifică URL-ul în funcție de API
+    return response; // Returnează datele întrebării
+};
