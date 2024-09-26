@@ -33,7 +33,7 @@ export default function TopicList() {
   const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [sortOrder, setSortOrder] = useState<'newest' | 'oldest'>('newest');
-  const [selectedTag, setSelectedTag] = useState<string | null>(null); 
+  const [selectedTag, setSelectedTag] = useState<string | null>(null);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -198,7 +198,9 @@ export default function TopicList() {
                             </Badge>
                           ))}
                         </div>
-                        <button className="answer-button">Answers</button>
+                        <button className="answer-button">
+                          {topic.responseCount === 1 ? '1 Answer' : `${topic.responseCount} Answers`}
+                        </button>
                       </Card.Body>
                     </Card>
                   </Col>

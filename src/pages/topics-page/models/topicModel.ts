@@ -4,5 +4,6 @@ export interface Topic {
     description: string;
     tags: string[];
     datecreate: number;
+    responseCount: number;
   }
   
