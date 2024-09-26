@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import "./home.css";
 import heroImage from "./images/hero-image.png";
 import explore from "./images/explore.png";
@@ -7,6 +8,13 @@ import ask from "./images/ask.png";
 import boxImage from "./images/pink.png";
 
 export default function Home() {
+
+  const navigate = useNavigate();
+
+  const handleRecentQuestionsClick = () => {
+    navigate("/topics");
+  };
+
   return (
     <div>
       {/* HERO SECTION */}
@@ -18,7 +26,7 @@ export default function Home() {
               Discover Answers to Any Question – From Everyday Curiosities to
               Complex Queries.
             </p>
-            <button className="cta-button">Recent Question</button>
+            <button className="cta-button" onClick={handleRecentQuestionsClick}>Recent Questions</button>
           </div>
           <div className="image-content">
             <img src={heroImage} alt="Hero visual representation" />

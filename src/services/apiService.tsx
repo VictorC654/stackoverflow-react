@@ -1,10 +1,9 @@
 // ALL THE COMMENTED LINES ARE FOR BACK END!!!
-import axios, {AxiosResponse} from "axios";
+import {AxiosResponse} from "axios";
 import { Topic } from "pages/topics-page/models/topicModel";
 import { createAxiosClient } from "./client";
-
-
-const api = createAxiosClient(); 
+import {get} from "lodash";
+let api = createAxiosClient();
 const getLocalStorage = (key : any) => {
     const storedItem = localStorage.getItem(key);
     return storedItem ? JSON.parse(storedItem) : null;
@@ -17,7 +16,7 @@ export const logoutUser = () => {
     localStorage.removeItem("currentUser");
 }
 
- export const getTopics = async () : Promise<Topic[]>  => {  
+ export const getTopics = async () : Promise<Topic[]>  => {
      return await api.get('/api/Topic').then(
          (response: AxiosResponse) => {
             console.log(response.data);
@@ -25,37 +24,24 @@ export const logoutUser = () => {
          }
      );
  }
-
-export const registerUser = async (user : any) => {
+export const registerUser = async (userData: { FullName:string, Email: string, Password: string, JobTitle:string  }) => {
     try {
-        const response = await api.post('/api/Auth/register', user);
-        const data = response.data;
-        // const currentItems = getLocalStorage('items') || [];
-        // currentItems.push(user);
-        setLocalStorage('items', data);
+        const response = await api.post('/api/Auth/register', userData );
         console.log("SUCCESS");
-        // FOR BACK END ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        // return data;
-        // FOR BACK END ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     } catch(e)
     {
-        console.log("eroare");
+        console.log("eroare" + e);
         throw e;
     }
 }
-export const loginUser = async (userData: { email: string; password: string }) => {
+export const loginUser = async (userData: { Email: string; Password: string }) => {
     try {
-        const response = await api.post("/api/Auth/login", userData);
-        const { token, user } = response.data;
-
-        if (localStorage.getItem("jwttoken")) {
-            localStorage.removeItem("jwttoken");
-        }
-
-        setLocalStorage("jwttoken", token);
-        setLocalStorage("currentUser", user);
-
-        console.log("Logged in successfully");
+         const response = await api.post("/api/Auth/login",  userData);
+         const token = response.data;
+         setLocalStorage("jwttoken", token);
+         api = createAxiosClient();
+         const user = await api.get('/api/Auth/getUser/me');
+         setLocalStorage("currentUser", user.data);
     } catch (error) {
         console.log(error);
         throw error;
@@ -66,7 +52,7 @@ export const checkIfUserLoggedIn  = (key : any) => {
 }
 export const getCurrentUser = async (): Promise<any> => {
         try {
-            return JSON.parse(getLocalStorage("currentUser")[1]);
+            return getLocalStorage("currentUser");
         } catch (error) {
             console.error('Error getting user', error);
         }

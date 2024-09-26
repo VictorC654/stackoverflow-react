@@ -4,19 +4,16 @@ const getLocalStorage = (key : any) => {
     const storedItem = localStorage.getItem(key);
     return storedItem ? JSON.parse(storedItem) : null;
 }
-
 export function createAxiosClient() {
     const client = axios.create({
         baseURL: 'https://localhost:44388',
-       
         headers: {
          'Content-Type': 'application/json',
         }
     });
     client.interceptors.request.use(
       (config) => {
-        
-          console.log("CONFIG!!!!!!!!!!!!!!!!!!!!!! ::::;",config);
+          // console.log("CONFIG!!!!!!!!!!!!!!!!!!!!!! ::::;",config);
           const token = getLocalStorage("jwttoken")?.token;
           if(!token)
           {
@@ -35,7 +32,5 @@ export function createAxiosClient() {
         return Promise.reject(error);
       }
     );
-  
    return client;
-  
   }

@@ -2,6 +2,8 @@ export interface Topic {
     id: number;
     title: string;
     description: string;
-    answers: number;
+    tags: string[];
+    datecreate: number;
+    responseCount: number;
   }
   
