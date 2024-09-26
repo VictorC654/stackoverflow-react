@@ -9,8 +9,8 @@ import hidePasswordIcon from "../register/images/hide_pass.png";
 import showPasswordIcon from "../register/images/show_pass.png";
 
 const LoginForm: React.FC = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [Email, setEmail] = useState("");
+  const [Password, setPassword] = useState("");
   const navigate = useNavigate();
   const [userNotFound, setUserNotFound] = useState(false);
   const [emailError, setEmailError] = useState("");
@@ -23,11 +23,11 @@ const LoginForm: React.FC = () => {
 
   useEffect(() => {
     validateForm();
-  }, [email, password]);
+  }, [Email, Password]);
 
   const validateForm = () => {
-    const isEmailValid = email.includes("@");
-    const isPasswordValid = password.length >= 6;
+    const isEmailValid = Email.includes("@");
+    const isPasswordValid = Password.length >= 6;
     if (touched.email) {
       setEmailError(isEmailValid ? "" : "Email not valid");
     }
@@ -42,7 +42,7 @@ const LoginForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      let userData = { email, password };
+      let userData = { Email, Password };
       await loginUser(userData);
       navigate("/home");
     } catch (e) {
@@ -92,7 +92,7 @@ const LoginForm: React.FC = () => {
                 </div>
                 <input
                   type={showPassword ? "text" : "password"}
-                  value={password}
+                  value={Password}
                   onChange={(e) => {
                     setPassword(e.target.value);
                     setTouched((prev) => ({ ...prev, password: true }));
