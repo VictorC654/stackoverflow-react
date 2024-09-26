@@ -23,7 +23,6 @@ const CreateQuestion: React.FC = () => {
     const [title, setTitle] = useState<string>('');
     const [description, setDescription] = useState<string>('');
     const [tags, setTags] = useState<string[]>([]);
-    const [userId, setUserId] = useState<number>(1); // Presupunând că ID-ul utilizatorului este 1
     const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();
 
@@ -54,7 +53,6 @@ const CreateQuestion: React.FC = () => {
             title: title.trim(),
             description: description.trim(),
             tags,
-            userId: Number(userId),
         };
     
         console.log('Data being sent:', questionData);
