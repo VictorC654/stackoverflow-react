@@ -1,12 +1,28 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from 'react';
-import { Card, Row, Col, Spinner, Badge } from 'react-bootstrap';
+import { Card, Row, Col, Spinner, Badge, Dropdown } from 'react-bootstrap';
 import './topic-list.css';
 import { Topic } from '../models/topicModel';
 import loupeImage from './img/loupe.png';
 import { getTopics } from "services/apiService";
 
 const TOPIC_DISPLAY = 15;
+
+const TAGS = [
+  'Math',
+  'Science',
+  'History',
+  'English',
+  'Geography',
+  'Management',
+  'Marketing',
+  'Programming',
+  'Hardware',
+  'Fitness',
+  'Psychology',
+  'Music',
+  'Literature'
+];
 
 export default function TopicList() {
   const [topics, setTopics] = useState<Topic[]>([]);
@@ -16,6 +32,8 @@ export default function TopicList() {
   const [totalFilteredTopics, setTotalFilteredTopics] = useState(0);
   const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [sortOrder, setSortOrder] = useState<'newest' | 'oldest'>('newest');
+  const [selectedTag, setSelectedTag] = useState<string | null>(null); 
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -35,34 +53,54 @@ export default function TopicList() {
     const fetchTopics = async () => {
       try {
         const fetchedTopics = await getTopics();
-        setTopics(fetchedTopics);
-        setFilteredTopics(fetchedTopics);
-        setTotalFilteredTopics(fetchedTopics.length);
+        sortTopics(fetchedTopics, sortOrder);
       } catch (err) {
         setError("Failed to fetch topics.");
         console.error(err);
       } finally {
-        setTimeout(() => {
-          setLoading(false);
-        }, 500);
+        setLoading(false);
       }
     };
     fetchTopics();
-  }, []);
+  }, [sortOrder]);
+
+  const sortTopics = (topicsArray: Topic[], order: 'newest' | 'oldest') => {
+    const sortedTopics = topicsArray.sort((a, b) => {
+      const dateA = new Date(a.datecreate).getTime();
+      const dateB = new Date(b.datecreate).getTime();
+      return order === 'newest' ? dateB - dateA : dateA - dateB;
+    });
+    setTopics(sortedTopics);
+    setFilteredTopics(sortedTopics);
+    setTotalFilteredTopics(sortedTopics.length);
+  };
 
   useEffect(() => {
+    let updatedFilteredTopics = topics;
+
     if (searchTerm) {
       const lowercasedTerm = searchTerm.toLowerCase();
-      const filtered = topics.filter(topic => topic.title.toLowerCase().includes(lowercasedTerm));
-      setFilteredTopics(filtered);
-      setTotalFilteredTopics(filtered.length);
-    } else {
-      setFilteredTopics(topics);
-      setTotalFilteredTopics(topics.length);
+      updatedFilteredTopics = updatedFilteredTopics.filter(topic =>
+        topic.title.toLowerCase().includes(lowercasedTerm)
+      );
     }
-  }, [searchTerm, topics]);
+
+    if (selectedTag) {
+      updatedFilteredTopics = updatedFilteredTopics.filter(topic =>
+        topic.tags.includes(selectedTag)
+      );
+    }
+
+    setFilteredTopics(updatedFilteredTopics);
+    setTotalFilteredTopics(updatedFilteredTopics.length);
+  }, [searchTerm, topics, selectedTag]);
 
   const visibleFilteredTopics = filteredTopics.slice(0, visibleTopics);
+
+  const truncateDescription = (description: string, wordLimit: number) => {
+    const words = description.split(' ');
+    return words.length <= wordLimit ? description : `${words.slice(0, wordLimit).join(' ')}...`;
+  };
 
   const handleCardClick = () => {
     navigate('/topic-details');
@@ -72,10 +110,12 @@ export default function TopicList() {
     navigate('/create-question');
   };
 
-  const truncateDescription = (description: string, wordLimit: number) => {
-    const words = description.split(' ');
-    if (words.length <= wordLimit) return description;
-    return `${words.slice(0, wordLimit).join(' ')}...`;
+  const handleSortChange = (newOrder: 'newest' | 'oldest') => {
+    setSortOrder(newOrder);
+  };
+
+  const handleTagSelect = (tag: string) => {
+    setSelectedTag(tag);
   };
 
   return (
@@ -85,7 +125,6 @@ export default function TopicList() {
           <Spinner animation="border" variant="dark" />
         </div>
       ) : filteredTopics.length === 0 ? (
-        // No results found section
         <div className="topic-not-found-container">
           <Card className="card">
             <Card.Img variant="top" src={loupeImage} alt="Questions Not Found" />
@@ -101,13 +140,48 @@ export default function TopicList() {
           </Card>
         </div>
       ) : (
-        // Results section
         <div className="topic-list-page">
           <div className="base-background">
             <div className="card-container">
               <div className="results-text">
                 Results ({totalFilteredTopics})
               </div>
+
+              <div className="both-dropdowns">
+                {/* Sort Dropdown */}
+                <div className="dropdown-container">
+                  <Dropdown>
+                    <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+                      Sort by: {sortOrder === 'newest' ? 'Newest' : 'Oldest'}
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                      <Dropdown.Item onClick={() => handleSortChange('newest')}>Newest</Dropdown.Item>
+                      <Dropdown.Item onClick={() => handleSortChange('oldest')}>Oldest</Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </div>
+
+                {/* Tag Filter Dropdown */}
+                <div className="dropdown-container">
+                  <Dropdown>
+                    <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+                      Filter by Tag: {selectedTag || 'Select a tag'}
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                      {TAGS.map((tag) => (
+                        <Dropdown.Item key={tag} onClick={() => handleTagSelect(tag)}>
+                          {tag}
+                        </Dropdown.Item>
+                      ))}
+                      <Dropdown.Item onClick={() => setSelectedTag(null)}>Clear Filter</Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </div>
+              </div>
+
+
               <Row className={topics.length === 1 ? 'single-result-card' : ''}>
                 {visibleFilteredTopics.map((topic) => (
                   <Col key={topic.id} md={12}>
