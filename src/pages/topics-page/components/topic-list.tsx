@@ -198,7 +198,7 @@ export default function TopicList() {
                             </Badge>
                           ))}
                         </div>
-                        <button className="answer-button">Answers</button>
+                        <button className="answer-button">{topic.responseCount} Answers</button>
                       </Card.Body>
                     </Card>
                   </Col>
