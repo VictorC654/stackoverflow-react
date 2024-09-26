@@ -3,8 +3,6 @@ import {AxiosResponse} from "axios";
 import { Topic } from "pages/topics-page/models/topicModel";
 import { createAxiosClient } from "./client";
 import {get} from "lodash";
-
-
 let api = createAxiosClient();
 const getLocalStorage = (key : any) => {
     const storedItem = localStorage.getItem(key);
@@ -26,21 +24,14 @@ export const logoutUser = () => {
          }
      );
  }
-
-export const registerUser = async (data : any) => {
+export const registerUser = async (userData: { FullName:string, Email: string, Password: string, JobTitle:string  }) => {
     try {
-        // const response = await api.post('/register', userData);
-
-        // const currentItems = getLocalStorage('users') || [];
-        // currentItems.push(response);
-        // setLocalStorage('items', currentItems);
+        console.log(userData);
+        const response = await api.post('/api/Auth/register', userData );
         console.log("SUCCESS");
-        // FOR BACK END ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        // return data;
-        // FOR BACK END ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     } catch(e)
     {
-        console.log("eroare");
+        console.log("eroare" + e);
         throw e;
     }
 }
@@ -48,10 +39,10 @@ export const loginUser = async (userData: { Email: string; Password: string }) =
     try {
          const response = await api.post("/api/Auth/login",  userData);
          const token = response.data;
-        setLocalStorage("jwttoken", token);
-        api = createAxiosClient();
-        const user = await api.get('/api/Auth/getUser/me');
-        setLocalStorage("currentUser", user.data);
+         setLocalStorage("jwttoken", token);
+         api = createAxiosClient();
+         const user = await api.get('/api/Auth/getUser/me');
+         setLocalStorage("currentUser", user.data);
     } catch (error) {
         console.log(error);
         throw error;
