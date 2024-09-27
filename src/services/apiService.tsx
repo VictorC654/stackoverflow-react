@@ -112,7 +112,7 @@ export const getUser = async (userEmail : any) => {
 }
 
 
-export const createQuestion = async (question: { title: string; description: string; tags: string[]; userId: number }) => {
+export const createQuestion = async (question: { title: string; description: string; tags: string[]; }) => {
     try {
         // POST request către endpoint-ul API care gestionează întrebările
         const response = await api.post('/api/Topic', question); // Endpoint-ul trebuie să fie corect definit în backend

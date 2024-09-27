@@ -102,25 +102,16 @@
 }
 
 .error {
-    position: absolute;
-    top: 100%;
-    left: 0;
     color: red;
-    font-size: 12px;
-    width: 100%;
-    transform: translateY(10px);
-    opacity: 0;
-    transition: all 0.3s ease;
-    margin-top: 5px;
+    font-size: 13px;
+    position: absolute; 
+    bottom: -20spx; 
+    width: 100%; 
+    text-align: left;
+    padding-left: 30px; 
+  
 }
 
-.input-container.error-visible .error {
-    transform: translateY(0);
-    opacity: 1;
-}
-.input-container.error-visible {
-    transform: translateY(-10px); 
-}
 
 .input-container select {
     appearance: none;
