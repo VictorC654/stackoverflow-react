@@ -2,7 +2,8 @@
 import {AxiosResponse} from "axios";
 import { Topic } from "pages/topics-page/models/topicModel";
 import { createAxiosClient } from "./client";
-import {get} from "lodash";
+import {get, parseInt} from "lodash";
+import * as repl from "repl";
 let api = createAxiosClient();
 const getLocalStorage = (key : any) => {
     const storedItem = localStorage.getItem(key);
@@ -24,6 +25,45 @@ export const logoutUser = () => {
          }
      );
  }
+ export const saveReply = async (replyData: { newMessage: string; id: string | undefined })=> {
+    try {
+        // const allComments = JSON.parse(localStorage.getItem('details-comments') || '{}');
+        if( replyData.id != null )
+        {
+            let intId = parseInt(replyData.id);
+            api.post("/api/Reply/" + intId, replyData.newMessage);
+            console.log("SUCCESS")
+        }
+    } catch(error)
+    {
+        console.log("Error when adding a reply");
+    }
+ }
+ export const fetchTopicReplies = async( id: string | undefined)=>
+{
+    localStorage.removeItem("topicComments");
+    try {
+        if(id != null)
+        {
+            let intTopicId = parseInt(id);
+            const resp = await api.get("/api/Reply/topic/" + intTopicId);
+            if(resp.data != null)
+            {
+                let commentsArray : any = [];
+                resp.data.forEach((comment : any)  => commentsArray.push(comment));
+                setLocalStorage("topicComments", commentsArray);
+            } else {
+                setLocalStorage("topicComments", []);
+            }
+        }
+    } catch
+    {
+        console.log("Eroare");
+    }
+}
+export const getComments = () => {
+    return getLocalStorage("topicComments");
+}
 export const registerUser = async (userData: { FullName:string, Email: string, Password: string, JobTitle:string  }) => {
     try {
         const response = await api.post('/api/Auth/register', userData );
@@ -83,8 +123,8 @@ export const createQuestion = async (question: { title: string; description: str
         throw error;
     }
 };
-
 export const getQuestionDetails = async (questionId: string) => {
     const response = await api.get(`/api/Topic/${questionId}`); // Modifică URL-ul în funcție de API
+    console.log(response.data);
     return response; // Returnează datele întrebării
 };
