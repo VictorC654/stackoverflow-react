@@ -13,6 +13,7 @@ const UserProfile: React.FC = () => {
     navigate("/home");
   };
   useEffect(() => {
+    localStorage.removeItem("topicComments");
     const fetchUser = async () => {
       try {
         const resp = await getCurrentUser();
