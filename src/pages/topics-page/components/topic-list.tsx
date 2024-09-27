@@ -102,8 +102,8 @@ export default function TopicList() {
     return words.length <= wordLimit ? description : `${words.slice(0, wordLimit).join(' ')}...`;
   };
 
-  const handleCardClick = () => {
-    navigate('/topic-details');
+  const handleCardClick = (topicId: number) => {
+    navigate(`/topic-details/${topicId}`);
   };
 
   const handleGoAsk = () => {
@@ -185,7 +185,7 @@ export default function TopicList() {
               <Row className={topics.length === 1 ? 'single-result-card' : ''}>
                 {visibleFilteredTopics.map((topic) => (
                   <Col key={topic.id} md={12}>
-                    <Card className="card mb-3" onClick={handleCardClick}>
+                    <Card className="card mb-3" onClick={() => handleCardClick(topic.id)}>
                       <Card.Body>
                         <Card.Title className="card-title">{topic.title}</Card.Title>
                         <Card.Text className="card-description">
