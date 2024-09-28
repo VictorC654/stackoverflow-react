@@ -112,18 +112,16 @@
 }
 /* Styling for tag container */
 .tags-container {
-    margin-top: 10px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px; /* Adaugă spațiu între taguri */
+    margin-bottom: 10px;
 }
 
 .tag-badge {
-    font-size: 0.85rem; /* Dimensiune mică pentru taguri */
-    background-color: #6c757d; /* Culoare de fundal pentru tag */
-    color: white;
-    padding: 5px 10px;
-    border-radius: 10px;
+    margin-right: 5px;
+    background-color: #E4E0FF !important;
+    color: black;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    cursor: default;
 }
 
 /* Design for the Alt User Card */
