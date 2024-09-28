@@ -8,7 +8,7 @@
     flex-direction: column;
     box-shadow: 0px 16px 32px -8px #0C0C0D66;
     padding: 32px;
-    margin: 0 auto; 
+    margin: 0 auto;
     position: relative;
     top: 130px; /* move the box up and down */
     margin-bottom: 260px;
@@ -30,12 +30,13 @@
 .create-question-container h2::after {
     content: "";
     position: absolute;
-    left: 25%; 
-    bottom: 0; /* Position the line exactly below the text*/
-    width: 99%; 
-    border-bottom: 2px solid #000; 
+    left: 25%;
+    bottom: 0; /* Position the line exactly below the text */
+    width: 99%;
+    border-bottom: 2px solid #000;
 }
-/*Box titles*/
+
+/* Box titles */
 .create-question-container label {
     font-size: 23px;
     margin-bottom: 5px;
@@ -44,11 +45,11 @@
     padding-left: 10px;
 }
 
-/* Styles for question box inputs, text and selects */
-.create-question-container input[type="text"], 
-.create-question-container textarea, 
+/* Styles for question box inputs, text, and selects */
+.create-question-container input[type="text"],
+.create-question-container textarea,
 .create-question-container select {
-    width: 100%; 
+    width: 100%;
     padding: 10px;
     margin-bottom: 20px;
     border: 1px solid #ccc;
@@ -66,44 +67,74 @@
 
 /* Specific styles for the selection */
 .create-question-container select {
-    width: 34%; 
+    width: 34%;
     padding: 10px;
     margin-bottom: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
-    transform: translateY(-10px) translateX(-8px);   
+    transform: translateY(-10px) translateX(-8px);
 }
-
-
 
 /* Styles for question box buttons */
 .create-question-container button {
     font-weight: bold;
     cursor: pointer;
     padding: 15px 25px;
-    margin: 0 auto; 
+    margin: 0 auto;
     background: #C1BAEF;
     box-shadow: -2px 3px 4px 2px #00000040;
-    border-radius: 0; 
+    border-radius: 0;
     transition: background-color 0s ease;
     color: black;
     width: 34%;
     border: none;
-    transform: translateY(58px) translateX(-356px); 
-    
+    transform: translateY(-62px) translateX(6px);
 }
 
 .create-question-container button:hover {
     background: white;
 }
 
+/* Error message styles */
 .error-message {
     color: red;
     font-size: 16px;
     margin-bottom: 10px;
-    bottom: -50spx; 
-    width: 15%; 
-    margin: 0; 
-    transform: translateY(46px);
+    bottom: -50px;
+    width: 15%;
+    margin: 0;
+    transform: translateY(-56px);
+}
+
+/* Styles for selected tags */
+.selected-tags ul {
+    list-style-type: none;
+    padding: 0;
+    
+}
+.selected-tags {
+    min-height: 50px; /* Ajustează înălțimea după cum este necesar */
+    margin-bottom: 20px; /* Adaugă puțin spațiu sub secțiunea tagurilor */
+}
+
+
+.selected-tags li {
+    display: inline-block;
+    margin: 1px;
+    padding: 5px 10px;
+    border-radius: 1px;
+    position: relative;
+    bottom: 0; 
+    margin: 0;
+    transform: translateY(-28px);
+    font-size: 13px;
+    
+}
+
+.selected-tags .remove-tag {
+    color: red;
+    cursor: pointer;
+    margin-left: 8px;
+    font-weight: bold;
 }

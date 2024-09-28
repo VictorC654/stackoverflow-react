@@ -39,14 +39,14 @@ const jobOptions: JobTitles[] = [
   JobTitles.GraphicDesigner,
 ];
 const RegisterForm: React.FC = () => {
-  const [email, setEmail] = useState("");
-  const [fullName, setFullName] = useState("");
+  const [Email, setEmail] = useState("");
+  const [FullName, setFullName] = useState("");
   const [nameError, setNameError] = useState("");
   const [emailError, setEmailError] = useState("");
-  const [password, setPassword] = useState("");
+  const [Password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [jobTitle, setJobTitle] = useState("");
+  const [JobTitle, setJobTitle] = useState("");
   const [isFormValid, setIsFormValid] = useState(false);
   const [touched, setTouched] = useState({
     fullName: false,
@@ -58,13 +58,13 @@ const RegisterForm: React.FC = () => {
 
   useEffect(() => {
     validateForm();
-  }, [email, fullName, password, jobTitle]);
+  }, [Email, FullName, Password]);
 
   const validateForm = () => {
-    const isEmailValid = email.includes("@");
-    const isFullNameValid = fullName.length <= 20;
-    const isPasswordValid = password.length >= 6;
-    const isJobTitleValid = jobTitle.length > 0;
+    const isEmailValid = Email.includes("@");
+    const isFullNameValid = FullName.length <= 20;
+    const isPasswordValid = Password.length >= 6;
+    const isJobTitleValid =JobTitle.length > 0;
 
     if (touched.email) {
       setEmailError(isEmailValid ? "" : "Email not valid");
@@ -87,7 +87,7 @@ const RegisterForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      let user = { email, fullName, password, jobTitle };
+      let user = { FullName, Email, Password, JobTitle };
       await registerUser(user);
       navigate("/login");
     } catch (e) {
@@ -110,7 +110,7 @@ const RegisterForm: React.FC = () => {
             <img src={emailIcon} alt="Email Icon" />
             <input
               type="email"
-              value={email}
+              value={Email}
               onChange={(e) => {
                 setEmail(e.target.value);
                 setTouched((prev) => ({ ...prev, email: true }));
@@ -125,7 +125,7 @@ const RegisterForm: React.FC = () => {
             <img src={nameIcon} alt="Name Icon" />
             <input
               type="text"
-              value={fullName}
+              value={FullName}
               onChange={(e) => {
                 setFullName(e.target.value);
                 setTouched((prev) => ({ ...prev, fullName: true }));
@@ -144,7 +144,7 @@ const RegisterForm: React.FC = () => {
             <img src={passwordIcon} alt="Password Icon" />
             <input
               type={showPassword ? "text" : "password"}
-              value={password}
+              value={Password}
               onChange={(e) => {
                 setPassword(e.target.value);
                 setTouched((prev) => ({ ...prev, password: true }));
@@ -164,7 +164,7 @@ const RegisterForm: React.FC = () => {
           <div className="input-container">
             <img src={jobIcon} alt="Job Icon" />
             <select
-              value={jobTitle}
+              value={JobTitle}
               onChange={(e) => setJobTitle(e.target.value)}
               required
             >

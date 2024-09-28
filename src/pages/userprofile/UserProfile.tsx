@@ -13,11 +13,12 @@ const UserProfile: React.FC = () => {
     navigate("/home");
   };
   useEffect(() => {
+    localStorage.removeItem("topicComments");
     const fetchUser = async () => {
       try {
         const resp = await getCurrentUser();
         if (resp) {
-          setUser(resp);
+          setUser(resp.currentUser);
         } else {
           console.warn("User data is null or undefined");
         }
@@ -31,12 +32,12 @@ const UserProfile: React.FC = () => {
     <div className="user-profile-container-center">
       <div className="user-profile-container">
         <div className="action-buttons">
-          <button
-            className="edit-profile-button"
-            onClick={() => navigate("/edit")}
-          >
-            Edit profile
-          </button>
+          {/*<button*/}
+          {/*  className="edit-profile-button"*/}
+          {/*  onClick={() => navigate("/edit")}*/}
+          {/*>*/}
+          {/*  Edit profile*/}
+          {/*</button>*/}
           <button className="logout-profile-button" onClick={logout}>
             Logout
           </button>
@@ -46,7 +47,7 @@ const UserProfile: React.FC = () => {
             <i className="fa fa-user" aria-hidden="true"></i>
           </div>
           <div className="user-profile-info-container">
-            <div className="user-profile-info-name">{user && user.email}</div>
+            <div className="user-profile-info-name">{user && user.name}</div>
             <div className="user-profile-info-desc">
               <div className="user-profile-info-desc-section">
                 <i className="fa-solid fa-cake-candles"></i>

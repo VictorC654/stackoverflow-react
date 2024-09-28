@@ -1,10 +1,10 @@
 // ALL THE COMMENTED LINES ARE FOR BACK END!!!
-import axios, {AxiosResponse} from "axios";
+import {AxiosResponse} from "axios";
 import { Topic } from "pages/topics-page/models/topicModel";
 import { createAxiosClient } from "./client";
-
-
-const api = createAxiosClient(); 
+import {get, parseInt} from "lodash";
+import * as repl from "repl";
+let api = createAxiosClient();
 const getLocalStorage = (key : any) => {
     const storedItem = localStorage.getItem(key);
     return storedItem ? JSON.parse(storedItem) : null;
@@ -17,7 +17,7 @@ export const logoutUser = () => {
     localStorage.removeItem("currentUser");
 }
 
- export const getTopics = async () : Promise<Topic[]>  => {  
+ export const getTopics = async () : Promise<Topic[]>  => {
      return await api.get('/api/Topic').then(
          (response: AxiosResponse) => {
             console.log(response.data);
@@ -25,37 +25,63 @@ export const logoutUser = () => {
          }
      );
  }
-
-export const registerUser = async (user : any) => {
+ export const saveReply = async (replyData: { newMessage: string; id: string | undefined })=> {
     try {
-        // const response = await api.post('/register', user);
-        // const data = response.data;
-        const currentItems = getLocalStorage('items') || [];
-        currentItems.push(user);
-        setLocalStorage('items', currentItems);
+        // const allComments = JSON.parse(localStorage.getItem('details-comments') || '{}');
+        if( replyData.id != null )
+        {
+            let intId = parseInt(replyData.id);
+            api.post("/api/Reply/" + intId, replyData.newMessage);
+            console.log("SUCCESS")
+        }
+    } catch(error)
+    {
+        console.log("Error when adding a reply");
+    }
+ }
+ export const fetchTopicReplies = async( id: string | undefined)=>
+{
+    localStorage.removeItem("topicComments");
+    try {
+        if(id != null)
+        {
+            let intTopicId = parseInt(id);
+            const resp = await api.get("/api/Reply/topic/" + intTopicId);
+            if(resp.data != null)
+            {
+                let commentsArray : any = [];
+                resp.data.forEach((comment : any)  => commentsArray.push(comment));
+                setLocalStorage("topicComments", commentsArray);
+            } else {
+                setLocalStorage("topicComments", []);
+            }
+        }
+    } catch
+    {
+        console.log("Eroare");
+    }
+}
+export const getComments = () => {
+    return getLocalStorage("topicComments");
+}
+export const registerUser = async (userData: { FullName:string, Email: string, Password: string, JobTitle:string  }) => {
+    try {
+        const response = await api.post('/api/Auth/register', userData );
         console.log("SUCCESS");
-        // FOR BACK END ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        // return data;
-        // FOR BACK END ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     } catch(e)
     {
-        console.log("eroare");
+        console.log("eroare" + e);
         throw e;
     }
 }
-export const loginUser = async (userData: { email: string; password: string }) => {
+export const loginUser = async (userData: { Email: string; Password: string }) => {
     try {
-        const response = await api.post("/api/Auth/login", userData);
-        const { token, user } = response.data;
-
-        if (localStorage.getItem("jwttoken")) {
-            localStorage.removeItem("jwttoken");
-        }
-
-        setLocalStorage("jwttoken", token);
-        setLocalStorage("currentUser", user);
-
-        console.log("Logged in successfully");
+         const response = await api.post("/api/Auth/login",  userData);
+         const token = response.data;
+         setLocalStorage("jwttoken", token);
+         api = createAxiosClient();
+         const user = await api.get('/api/Auth/getUser/me');
+         setLocalStorage("currentUser", user.data);
     } catch (error) {
         console.log(error);
         throw error;
@@ -66,7 +92,7 @@ export const checkIfUserLoggedIn  = (key : any) => {
 }
 export const getCurrentUser = async (): Promise<any> => {
         try {
-            return JSON.parse(getLocalStorage("currentUser")[1]);
+            return getLocalStorage("currentUser");
         } catch (error) {
             console.error('Error getting user', error);
         }
@@ -84,3 +110,21 @@ export const getUser = async (userEmail : any) => {
         throw error;
     }
 }
+
+
+export const createQuestion = async (question: { title: string; description: string; tags: string[]; }) => {
+    try {
+        // POST request către endpoint-ul API care gestionează întrebările
+        const response = await api.post('/api/Topic', question); // Endpoint-ul trebuie să fie corect definit în backend
+        console.log("Question created successfully:", response.data);
+        return response;
+    } catch (error) {
+        console.error('Error creating question:', error);
+        throw error;
+    }
+};
+export const getQuestionDetails = async (questionId: string) => {
+    const response = await api.get(`/api/Topic/${questionId}`); // Modifică URL-ul în funcție de API
+    console.log(response.data);
+    return response; // Returnează datele întrebării
+};

@@ -1,219 +1,219 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useSearchParams } from 'react-router-dom';
-import { Card, Row, Col, Badge } from 'react-bootstrap'; // Import Badge pentru taguri
+import { useParams } from 'react-router-dom';
+import { Card, Row, Col } from 'react-bootstrap';
 import './topic-details.css';
 import user from './img/user.png';
 import Ellipse from './img/Ellipse.png';
 import time from './img/time.png';
 import { Comment } from './models/detailsModels';
+import {getQuestionDetails, fetchTopicReplies, saveReply, getComments, getCurrentUser} from 'services/apiService'; // Importă funcția pentru a obține detaliile întrebării
 
-// Listă generală de comentarii
-const commentsList = [
-  "Eu nu înțeleg ce ai scris, tradu te rog frumos.",
-  "În ce limbă ai scris?",
-  'Aceasta este o opinie interesantă!',
-  'Nu sunt sigur dacă înțeleg acest punct de vedere.',
-  "Întrebarea nu este bine formulată.",
-  "Acest subiect este discutat prea puțin aici.",
-  "Cred că ar trebui să existe mai multe detalii."
-];
-
-// Functie care generează comentarii unice pentru un topic pe baza id-ului
-const generateCommentsForTopic = (topicId: number): Comment[] => {
-  return Array.from({ length: 3 }, (_, index) => ({
-    id: index + 1,
-    username: "Alt user",
-    comment: commentsList[(topicId * index) % commentsList.length],
-    date: `${10 + index}.10.2024`,
-    rating: 0
-  }));
+const fetchComments = (id: string | undefined): Comment[] => {
+  const allComments = JSON.parse(localStorage.getItem('details-comments') || '{}');
+  if (id && allComments[id]) {
+    return allComments[id];
+  }
+  return [];
 };
 
-// API fictiv pentru obținerea datelor utilizatorului curent
-const fetchCurrentUser = async (): Promise<string> => {
-  try {
-    const response = await new Promise<{ username: string }>((resolve) =>
-      resolve({ username: 'Simple User' })
-    );
-    return response.username;
-  } catch (error) {
-    console.error('Error fetching user data:', error);
-    return 'Simple User';
-  }
+const saveCommentsToLocalStorage = (id: string | undefined, comments: Comment[]) => {
+  const allComments = JSON.parse(localStorage.getItem('topicComments') || '{}');
+  localStorage.setItem('topicComments', JSON.stringify(allComments));
 };
 
 const TopicDetails = () => {
+  const [currentUser, setCurrentUser] = useState<any>(null);
   const { id } = useParams<{ id: string }>();
-  const [searchParams] = useSearchParams();
   const [newMessage, setNewMessage] = useState('');
   const [comments, setComments] = useState<Comment[]>([]);
-  const [topic, setTopic] = useState<any>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [currentUser, setCurrentUser] = useState<string>('Simple User');
-
+  const [topicFound, setTopicFound] = useState<boolean>(false);
+  const [question, setQuestion] = useState<any>(null); // State pentru a stoca detaliile întrebării
   useEffect(() => {
-    const fetchAndSetData = async () => {
+    const fetchUser = async () => {
       try {
-        const topicData = { 
-          title: `Topic ${id || 'New Topic'}`, 
-          createdBy: 'Anonymous', 
-          createdDate: new Date(),
-          tags: ['tag1', 'tag2', 'general'] // Adaugăm tagurile aici
-        };
-        setTopic(topicData);
-
-        // Verificăm dacă parametrul isNew este setat la true
-        const isNew = searchParams.get('isNew') === 'true';
-
-        if (isNew) {
-          setComments([]); // Nu afișăm comentarii predefinite pentru o întrebare nouă
+        const resp = await getCurrentUser();
+        if (resp) {
+          setCurrentUser(resp.currentUser);
         } else {
-          const fetchedComments = generateCommentsForTopic(Number(id));
-          setComments(fetchedComments);
+          console.warn("User data is null or undefined");
         }
-
-        const user = await fetchCurrentUser();
-        setCurrentUser(user);
       } catch (error) {
-        console.error('Error fetching topic or comments:', error);
-      } finally {
-        setLoading(false);
+        console.log(error);
       }
     };
+    fetchUser();
+    const fetchedComments = fetchComments(id);
+    setComments(fetchedComments);
+    setTopicFound(fetchedComments.length > 0);
+    const getReplies = async () => {
+      await fetchTopicReplies(id);
+      setComments(getComments());
+    }
+    getReplies();
+    const fetchQuestionDetails = async () => {
+      // Verificăm dacă id este definit
+      if (id) {
+        try {
+          const response = await getQuestionDetails(id);
+          if (response && response.status) {
+            setQuestion(response.data); // Stochează întrebarea în stare
+            setTopicFound(true);
+          } else {
+            setTopicFound(false);
+          }
+        } catch (error) {
+          console.error('Error fetching question details:', error);
+          setTopicFound(false);
+        }
+      }
+    };
+    fetchQuestionDetails();
 
-    fetchAndSetData();
-  }, [id, searchParams]);
-
-  // Gestionăm input-ul utilizatorului
+    const handleStorageChange = () => {
+      const updatedComments = fetchComments(id);
+      setComments(updatedComments);
+    };
+    window.addEventListener('storage', handleStorageChange);
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, [id]);
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewMessage(e.target.value);
   };
-
-  // Gestionăm adăugarea unui nou comentariu
+  const addReply = async () => {
+      let replyData = { newMessage, id }
+      await saveReply(replyData);
+  }
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && newMessage.trim()) {
       const newComment: Comment = {
         id: comments.length + 1,
-        username: currentUser,
-        comment: newMessage,
-        date: new Date().toLocaleDateString('ro-RO'),
+        authorName: currentUser.name,
+        description: newMessage,
+        createdAt: new Date().toLocaleDateString('ro-RO'),
         rating: 0,
       };
-
-      // Actualizăm lista de comentarii
-      setComments([...comments, newComment]);
-
-      // Resetăm câmpul de introducere a mesajului
+      const updatedComments = [newComment, ...comments];
+      setComments(updatedComments);
+      saveCommentsToLocalStorage(id, updatedComments);
       setNewMessage('');
+      addReply();
     }
   };
+  if (!topicFound && comments.length === 0) {
+    return (
+        <div className="base-background">
+          {question ? (
+              <Card className="simple-user-card mb-4">
+                <Card.Body>
+                  <div className="user-info">
+                    <div className="user-image-container">
+                      <img src={Ellipse} alt="Ellipse" className="user-ellipse" />
+                      <img src={user} alt="user" className="user-image" />
+                    </div>
+                    <div>
+                      <div className="username">{question.user.name}</div>
+                      <div className="comment-content">
+                        <strong>{question.description}</strong>
+                      </div>
+                      <p><strong>No answer</strong></p> {/* Afișează mesajul "No answer" */}
+                    </div>
+                    <div className="comment-date">{new Date().toLocaleDateString('ro-RO')}</div>
+                  </div>
+                </Card.Body>
+              </Card>
+          ) : (
+              <div>
+                <div className="input-group mb-4 fixed-input">
+                  <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Write your answer"
+                      value={newMessage}
+                      onChange={handleInputChange}
+                      onKeyPress={handleKeyPress}
+                  />
+                </div>
 
-  // Gestionăm actualizarea rating-ului unui comentariu
-  const handleRatingChange = (commentId: number, rating: number) => {
-    const updatedComments = comments.map((comment) =>
-      comment.id === commentId ? { ...comment, rating } : comment
+                <div className="no-comments">
+                  <img src={time} alt="time" />
+                  <h3>
+                    <strong>Simple user</strong> is waiting for your help.
+                  </h3>
+                </div>
+              </div>
+          )}
+        </div>
     );
-    setComments(updatedComments);
-  };
-
-  if (loading) {
-    return <div>Loading topic details...</div>;
-  }
-
-  // Verificăm dacă topic nu este null înainte de a accesa proprietățile sale
-  if (!topic) {
-    return <div>Topic not found</div>;
   }
 
   return (
-    <div className="base-background">
-      {/* Afișăm detaliile topicului */}
-      <Card className="simple-user-card mb-4">
-      <Card.Body>
-    <div className="user-info">
-      <div className="user-image-container">
-        <img src={Ellipse} alt="Ellipse" className="user-ellipse" />
-        <img src={user} alt="user" className="user-image" />
-      </div>
-      <div className="content-container">
-        <div className="username">{topic.createdBy || 'Anonymous'}</div>
-        <div className="comment-content">
-          <strong>Lorem ipsum odor amet, consectetuer adipiscing elit.</strong>
-          <p>Ut volutpat tristique sodales nascetur orci. Neque erat montes cubilia non accumsan volutpat cursus orci.</p>
+      <div className="base-background">
+        <Card className="simple-user-card mb-4">
+          <Card.Body>
+            <div className="user-info">
+              <div className="user-image-container">
+                <img src={Ellipse} alt="Ellipse" className="user-ellipse" />
+                <img src={user} alt="user" className="user-image" />
+              </div>
+              <div>
+                <div className="username">{ question?.user.name || 'User'}</div>
+                <div className="comment-content">
+                  <strong>{question?.title || 'Lorem ipsum odor amet, consectetur adipiscing elit.'}</strong>
+                  <div>{question?.description || 'Lorem ipsum odor amet, consectetur adipiscing elit.'}</div>
+                </div>
+              </div>
+              <div className="comment-date">{new Date().toLocaleDateString('ro-RO')}</div>
+            </div>
+          </Card.Body>
+        </Card>
+
+        <div className="input-group mb-4 fixed-input">
+          <input
+              type="text"
+              className="form-control"
+              placeholder="Write your answer"
+              value={newMessage}
+              onChange={handleInputChange}
+              onKeyPress={handleKeyPress}
+          />
         </div>
 
-        {/* Afișăm doar primul tag sub descriere */}
-        {topic.tags && topic.tags.length > 0 && (
-  <div className="tags-container" style={{ marginTop: '10px' }}>
-    <Badge pill bg="secondary" className="tag-badge">
-      {topic.tags[0].replace(/[0-9]/g, '')} 
-    </Badge>
-  </div>
-)}
-      </div>
-      <div className="comment-date">
-        {topic.createdDate ? new Date(topic.createdDate).toLocaleDateString('ro-RO') : 'Unknown date'}
-      </div>
-    </div>
-  </Card.Body>
-</Card>
-
-      {/* Input pentru adăugarea unui nou comentariu */}
-      <div className="input-group mb-4 fixed-input" style={{ position: 'relative', bottom: '0px', marginTop: '20px' }}>
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Write your answer"
-          value={newMessage}
-          onChange={handleInputChange}
-          onKeyPress={handleKeyPress}
-        />
-      </div>
-
-      {/* Afișăm comentariile noi adăugate */}
-      {comments.length > 0 ? (
         <div className="comments-container">
           <Row>
             {comments.map((comment) => (
-              <Col key={comment.id} md={12}>
-                <Card className="comment-card mb-3">
-                  <Card.Body>
-                    <div className="user-info">
-                      <div className="comment-date">{comment.date}</div>
-                      <div className="user-image-container">
-                        <img src={Ellipse} alt="Ellipse" className="user-ellipse" />
-                        <img src={user} alt="user" className="user-image" />
+                <Col key={comment.id} md={12}>
+                  <Card className="comment-card mb-3">
+                    <Card.Body>
+                      <div className="user-info">
+                        <div className="comment-date">{comment.createdAt}</div>
+                        <div className="user-image-container">
+                          <img src={Ellipse} alt="Ellipse" className="user-ellipse" />
+                          <img src={user} alt="user" className="user-image" />
+                        </div>
+                        <div>
+                          <div className="username">{comment.authorName}</div>
+                          <div className="comment-content">{comment.description}</div>
+                        </div>
                       </div>
-                      <div>
-                        <div className="username">{comment.username}</div>
-                        <div className="comment-content">{comment.comment}</div>
+                      <div className="rating-stars">
+                        {Array(5).fill(null).map((_, index) => (
+                            <span
+                                key={index}
+                                className={`comment-star ${comment.rating > index ? 'selected' : ''}`}
+                            >
+                        ★
+                      </span>
+                        ))}
                       </div>
-                    </div>
-                    {/* Adăugăm stelele pentru rating */}
-                    <div className="rating-stars">
-                      {Array(5).fill(null).map((_, index) => (
-                        <span
-                          key={index}
-                          className={`comment-star ${comment.rating > index ? 'selected' : ''}`}
-                          onClick={() => handleRatingChange(comment.id, index + 1)}
-                        >
-                          ★
-                        </span>
-                      ))}
-                    </div>
-                  </Card.Body>
-                </Card>
-              </Col>
+                    </Card.Body>
+                  </Card>
+                </Col>
             ))}
           </Row>
         </div>
-      ) : (
-        <div className="no-answer-container">
-          <img src={time} alt="time" />
-          <p>Simple user is waiting for your help.</p>
-        </div>
-      )}
-    </div>
+      </div>
   );
 };
 
