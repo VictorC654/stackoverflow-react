@@ -1,17 +1,62 @@
 import React, { useState, useEffect } from "react";
 import "./edit-user.css";
 import { useNavigate } from "react-router-dom";
+import { getCurrentUser, updateUser } from "../../services/apiService";
 
 const EditProfile: React.FC = () => {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [Name, setUsername] = useState("");
+  const [Email, setEmail] = useState("");
+  const [CurrentPassword, setCurrentPassword] = useState("");
+  const [NewPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const name = localStorage.getItem("currentUser")
+        const resp = await getCurrentUser();
+        if (resp) {
+          setUsername(resp.Name);
+          setEmail(resp.email);
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (NewPassword !== confirmPassword) {
+      setError("New password and confirm password do not match");
+      return;
+    }
+
+    const updatedUser = {
+      Name,
+      Email,
+      CurrentPassword,
+      NewPassword,
+    };
+
+    try {
+      await updateUser(updatedUser);
+      console.log("Profile updated successfully");
+      navigate("/profile");
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      setError("Failed to update profile");
+    }
+  };
 
   return (
     <div className="edit-form-center">
-      <form className="edit-form">
+      <form className="edit-form" onSubmit={handleSubmit}>
         <button
           type="button"
           className="profile-button"
@@ -29,10 +74,8 @@ const EditProfile: React.FC = () => {
           <div className="input-group">
             <input
               type="text"
-              value={username}
-              placeholder="Enter name"
+              placeholder={Name || "Enter name"}
               onChange={(e) => setUsername(e.target.value)}
-              required
             />
           </div>
 
@@ -40,10 +83,9 @@ const EditProfile: React.FC = () => {
           <div className="input-group">
             <input
               type="email"
-              value={email}
-              placeholder="Enter email"
+              value={Email}
+              placeholder={Email || "Enter email"}
               onChange={(e) => setEmail(e.target.value)}
-              required
             />
           </div>
 
@@ -51,8 +93,8 @@ const EditProfile: React.FC = () => {
           <div className="input-group">
             <input
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={CurrentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
               placeholder="Current password"
             />
           </div>
@@ -60,8 +102,8 @@ const EditProfile: React.FC = () => {
           <div className="input-group">
             <input
               type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              value={NewPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
               placeholder="New password"
             />
           </div>
@@ -74,6 +116,7 @@ const EditProfile: React.FC = () => {
             />
           </div>
         </div>
+        {error && <p className="error-message">{error}</p>}
         <button type="submit" className="save-button">
           Save Changes
         </button>
