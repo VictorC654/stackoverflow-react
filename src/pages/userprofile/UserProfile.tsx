@@ -32,12 +32,12 @@ const UserProfile: React.FC = () => {
     <div className="user-profile-container-center">
       <div className="user-profile-container">
         <div className="action-buttons">
-          {/*<button*/}
-          {/*  className="edit-profile-button"*/}
-          {/*  onClick={() => navigate("/edit")}*/}
-          {/*>*/}
-          {/*  Edit profile*/}
-          {/*</button>*/}
+          <button
+            className="edit-profile-button"
+            onClick={() => navigate("/edit")}
+          >
+            Edit profile
+          </button>
           <button className="logout-profile-button" onClick={logout}>
             Logout
           </button>
