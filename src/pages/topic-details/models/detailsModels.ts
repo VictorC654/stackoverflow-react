@@ -4,4 +4,5 @@ export interface Comment {
   description: string;
   createdAt: string;
   rating: number;
+  tags?: string[];
 }
