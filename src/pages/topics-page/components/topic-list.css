@@ -218,7 +218,7 @@
   width: 200px;
   height: 200px;
   object-fit: cover;
-  margin-top: 70px;
+  margin-top: 50px;
   margin-bottom: 20px;
 }
 
@@ -235,7 +235,7 @@
 .topic-not-found-container .card-text {
   font-family: 'Montserrat', sans-serif;
   font-size: 25px;
-  margin-bottom: 60px;
+  margin-bottom: 40px;
   cursor: default;
 }
 
@@ -254,5 +254,23 @@
 
 .topic-not-found-container .ask-button:hover {
   background-color: #7f66c1;
+  transform: scale(1.05);
+}
+
+.topic-not-found-container .back-to-button {
+  background-color: #C1BAEF; 
+  border: none;
+  padding: 8px 20px; 
+  border-radius: 10px;
+  font-family: 'Montserrat', sans-serif;
+  color: #433D6A; 
+  font-weight: 600; 
+  font-size: 16px; 
+  margin-bottom: 15px; 
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.topic-not-found-container .back-to-button:hover {
+  background-color: #A89CDF; 
   transform: scale(1.05);
 }

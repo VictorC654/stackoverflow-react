@@ -110,6 +110,10 @@ export default function TopicList() {
     navigate('/create-question');
   };
 
+  const handleGoBack = () => {
+    navigate('/topics');
+  }
+
   const handleSortChange = (newOrder: 'newest' | 'oldest') => {
     setSortOrder(newOrder);
   };
@@ -135,6 +139,9 @@ export default function TopicList() {
               </Card.Text>
               <button className="ask-button" onClick={handleGoAsk}>
                 ASK YOUR QUESTION
+              </button>
+              <button className="back-to-button" onClick={handleGoBack}>
+                BACK TO QUESTIONS
               </button>
             </Card.Body>
           </Card>
