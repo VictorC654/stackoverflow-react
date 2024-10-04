@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { getCurrentUser, updateUser } from "../../services/apiService";
 
 const EditProfile: React.FC = () => {
-  const [Name, setUsername] = useState("");
-  const [Email, setEmail] = useState("");
+  const [Name, setUsername] = useState<any>(null);
+  const [Email, setEmail] = useState<any>(null);
   const [CurrentPassword, setCurrentPassword] = useState("");
   const [NewPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -15,11 +15,11 @@ const EditProfile: React.FC = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const name = localStorage.getItem("currentUser")
+        const name = localStorage.getItem("currentUser");
         const resp = await getCurrentUser();
         if (resp) {
-          setUsername(resp.Name);
-          setEmail(resp.email);
+          setUsername(resp.currentUser);
+          setEmail(resp.currentUser);
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -74,7 +74,7 @@ const EditProfile: React.FC = () => {
           <div className="input-group">
             <input
               type="text"
-              placeholder={Name || "Enter name"}
+              placeholder={Name && Name.name}
               onChange={(e) => setUsername(e.target.value)}
             />
           </div>
@@ -83,8 +83,7 @@ const EditProfile: React.FC = () => {
           <div className="input-group">
             <input
               type="email"
-              value={Email}
-              placeholder={Email || "Enter email"}
+              placeholder={Email && Email.email}
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
