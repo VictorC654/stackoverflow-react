@@ -22,7 +22,6 @@ export default function App() {
           <Route path="login" element={<Login />} />
           <Route path="create-question" element={<CreateQuestion />} />
           <Route path="topics" element={<TopicList />} />
-          <Route path="topic-details" element={<TopicDetails />} />
           <Route path="/topic-details/:id" element={<TopicDetails />} />
           <Route path="/profile" element={<UserProfile />} />
           <Route path="/edit" element={<UserEdit />} />

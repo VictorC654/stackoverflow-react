@@ -170,6 +170,3 @@ export const addRatingStars = async (commentId : number, rating : number) => {
   });
 };
 
-
-
-

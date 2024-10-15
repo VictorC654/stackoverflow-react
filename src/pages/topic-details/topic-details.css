@@ -110,6 +110,20 @@
     top: 30px;
     right: 30px;
 }
+/* Styling for tag container */
+.tags-container {
+    margin-bottom: 10px;
+}
+
+.tag-badge {
+    margin-right: 5px;
+    background-color: #E4E0FF !important;
+    color: black;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    cursor: default;
+}
+
 /* Design for the Alt User Card */
 .alt-user-card {
     display: flex;
