@@ -6,7 +6,7 @@ import user from './img/user.png';
 import Ellipse from './img/Ellipse.png';
 import time from './img/time.png';
 import { Comment } from './models/detailsModels';
-import { getQuestionDetails, fetchTopicReplies, saveReply, getComments, getCurrentUser } from 'services/apiService'; 
+import { getQuestionDetails, fetchTopicReplies, saveReply, getComments, getCurrentUser, addRatingStars } from 'services/apiService'; 
 
 const TAGS = [
   'Math', 'Science', 'History', 'English', 'Geography',
@@ -33,6 +33,36 @@ const saveCommentsToLocalStorage = (id: string | undefined, comments: Comment[])
   const allComments = JSON.parse(localStorage.getItem('topicComments') || '{}');
   allComments[id] = comments;
   localStorage.setItem('topicComments', JSON.stringify(allComments));
+};
+
+// Funcția pentru a obține toate ratingurile din localStorage
+const fetchRatings = (): Record<number, number> => {
+  try {
+    const allRatings = JSON.parse(
+      localStorage.getItem("commentRatings") || "{}"
+    );
+    return allRatings && typeof allRatings === "object" ? allRatings : {};
+  } catch (error) {
+    console.error("Error fetching ratings from localStorage:", error);
+    return {}; // Dacă există o eroare, returnează un obiect gol
+  }
+};
+
+// Funcția pentru a salva un rating în localStorage
+const saveRatingsToLocalStorage = (commentId: number, rating: number) => {
+  try {
+    const allRatings = JSON.parse(
+      localStorage.getItem("commentRatings") || "{}"
+    );
+    if (typeof allRatings !== "object") {
+      throw new Error("Invalid ratings format in localStorage");
+    }
+
+    allRatings[commentId] = rating; 
+    localStorage.setItem("commentRatings", JSON.stringify(allRatings)); 
+  } catch (error) {
+    console.error("Error saving rating to localStorage:", error);
+  }
 };
 
 const TopicDetails = () => {
@@ -62,14 +92,28 @@ const TopicDetails = () => {
     
     const fetchedComments = fetchComments(id);
     const sortedFetchedComments = fetchedComments.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-    setComments(sortedFetchedComments);
-    setTopicFound(sortedFetchedComments.length > 0);
+    // Obține ratingurile din localStorage
+    const savedRatings = fetchRatings();
+
+    // Combină comentariile cu ratingurile corespunzătoare
+    const commentsWithRatings = fetchedComments.map((comment) => ({
+      ...comment,
+      rating: savedRatings[comment.id] || 0,
+    }));
+
+    setComments(commentsWithRatings);
+    setTopicFound(commentsWithRatings.length > 0);
     
     const getReplies = async () => {
       await fetchTopicReplies(id);
       const commentsFromReplies = getComments();
       const sortedReplies = commentsFromReplies.sort((a: Comment, b: Comment) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-      setComments(sortedReplies);
+      const repliesWithRatings = sortedReplies.map((reply: Comment) => ({
+        ...reply,
+        rating: savedRatings[reply.id] || 0,
+      }));
+
+      setComments(repliesWithRatings);
     };
     
     getReplies();
@@ -146,15 +190,31 @@ const TopicDetails = () => {
   };
   
   // Funcție pentru actualizarea ratingului unui comentariu
-  const handleRatingClick = (commentId: number, rating: number) => {
+  const handleRatingClick = async (commentId: number, rating: number) => {
     const updatedComments = comments.map((comment) => {
       if (comment.id === commentId) {
         return { ...comment, rating };
       }
       return comment;
     });
+
     setComments(updatedComments);
     saveCommentsToLocalStorage(id, updatedComments);
+    saveRatingsToLocalStorage(commentId, rating);
+    const savedRatings = fetchRatings();
+
+    try {
+      await addRatingStars(commentId, rating);
+    } catch (error) {
+      console.error("Error submitting rating:", error);
+      const revertedComments = comments.map((comment) => {
+        if (comment.id === commentId) {
+          return { ...comment, rating: savedRatings[commentId] || 0 };
+        }
+        return comment;
+      });
+      setComments(revertedComments);
+    }
   };
 
   if (!topicFound && comments.length === 0) {

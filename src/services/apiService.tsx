@@ -137,10 +137,10 @@ export const getQuestionDetails = async (questionId: string) => {
 };
 
 export const updateUser = async (updatedUser: {
-  Name: string;
-  Email: string;
-  CurrentPassword: string;
-  NewPassword: string;
+  Name: any;
+  Email: any;
+  CurrentPassword: any;
+  NewPassword: any;
 }) => {
   try {
     const token = getLocalStorage("jwttoken");
@@ -161,3 +161,12 @@ export const updateUser = async (updatedUser: {
     throw error;
   }
 };
+
+export const addRatingStars = async (commentId : number, rating : number) => {
+  const response = await api.post(`/api/Reply/rating?replyId=${commentId}`, rating, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+};
+
